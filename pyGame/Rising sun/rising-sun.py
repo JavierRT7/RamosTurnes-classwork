@@ -44,7 +44,7 @@ while not done:
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
-  clock.tick(60)
+  clock.tick(15)
 #End While - End of game loop
 pygame.quit()
 
