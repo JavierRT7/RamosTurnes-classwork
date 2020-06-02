@@ -14,8 +14,9 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("My Window")
 # -- Exit game flag set to false
 done = False
-sun_x = 40
+sun_x = -40
 sun_y = 100
+sun_y_movement = 16
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 ### -- Game Loop
@@ -27,7 +28,14 @@ while not done:
     #End If
   #Next event
   # -- Game logic goes after this comment
-  sun_x = sun_x + 5
+  sun_y_movement = sun_y_movement - 1
+  sun_x = sun_x + 22
+  sun_y = sun_y  - sun_y_movement
+  if sun_x == 686:
+      sun_x = -40
+      sun_y = 100
+      sun_y_movement = 16
+    #End If
   # -- Screen background is BLACK
   screen.fill (BLACK)
   # -- Draw here
