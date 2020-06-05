@@ -40,11 +40,18 @@ while not done:
           y_padd = y_padd + 5
   #Next event
   # -- Game logic goes after this comment
+  if x_val == x_padd:
+      if y_val == y_padd:
+          x_direction = 1
+      #End If
+  #End If
   if x_val == 640:
       x_direction = -1
       #End If
-  if x_val == 0:
+  if x_val < -10:
       x_direction = 1
+      x_val = 150
+      y_val = 200
       #End If
   if y_val == 0:
       y_direction = 1
