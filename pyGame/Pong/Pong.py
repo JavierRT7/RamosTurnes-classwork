@@ -1,3 +1,5 @@
+### SRC - This is a good start but needs some more work
+
 import pygame
 # -- Global Constants
 # -- Colours
@@ -34,13 +36,14 @@ while not done:
     #End If
     keys = pygame.key.get_pressed()
         ## - the up key or down key has been pressed
+    ### SRC - do not change the position of the paddle here, just it's speed/direction.
     if keys[pygame.K_UP]:
-          y_padd = y_padd - 5
+          y_padd = y_padd - 5 
     if keys[pygame.K_DOWN]:
           y_padd = y_padd + 5
   #Next event
   # -- Game logic goes after this comment
-  if x_val == x_padd:
+  if x_val == x_padd:  ### SRC - It might not be equal, especially if you make the ball go faster.
       if y_val == y_padd:
           x_direction = 1
       #End If
