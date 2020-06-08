@@ -28,6 +28,8 @@ while not done:
     #End If
   #Next event
   # -- Game logic goes after this comment
+  ### SRC - I like what you are doing here, but what can you do to slow this down?
+  ### You really want to increment x by one each time.
   sun_y_movement = sun_y_movement - 1
   sun_x = sun_x + 22
   sun_y = sun_y  - sun_y_movement
@@ -44,7 +46,7 @@ while not done:
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
-  clock.tick(15)
+  clock.tick(15) ### SRC - 15fps is a bit slow, makes jerky animation
 #End While - End of game loop
 pygame.quit()
 
