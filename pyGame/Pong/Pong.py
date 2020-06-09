@@ -36,7 +36,7 @@ while not done:
     #End If
     keys = pygame.key.get_pressed()
         ## - the up key or down key has been pressed
-    ### SRC - do not change the position of the paddle here, just it's speed/direction.
+    ### SRC - You can fix this by not including this in the for loop!
     if keys[pygame.K_UP]:
           y_padd = y_padd - 5 
     if keys[pygame.K_DOWN]:
