@@ -36,6 +36,12 @@ ai_collision = x_ai + 7.5
 ai_collision_y1 = y_ai + 30
 ai_collision_y2 = y_ai - 30
 ai_direction = 2
+colour = BLACK
+winner = '.'
+score = 'Score: 0'
+score_int = 0
+score2 = 'Score: 0'
+score2_int = 0
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 ### -- Game Loop
@@ -94,17 +100,54 @@ while not done:
       x_direction = 2
       x_val = 320
       y_val = 200
+      score_int = score_int + 1
       #End If
   if x_val < -10:
       x_direction = -2
       x_val = 320
       y_val = 200
+      score2_int = score2_int + 1
       #End If
   if y_val < 0:
       y_direction = 2
       #End If
   if y_val > 480:
       y_direction = -2
+      #End if
+  if score_int == 1:
+      score = 'Score: 1'
+      #End If
+  if score_int == 2:
+      score = 'Score: 2'
+      #End If
+  if score_int == 3:
+      score = 'Score: 3'
+      #End If
+  if score_int == 4:
+      score = 'Score: 4'
+      #End If
+  if score_int == 5:
+      score = 'Score: 5'
+      winner = 'Player Wins!'
+      colour = WHITE
+      #End If
+  if score2_int == 1:
+      score2 = 'Score: 1'
+      #End If
+  if score2_int == 2:
+      score2 = 'Score: 2'
+      #End If
+  if score2_int == 3:
+      score2 = 'Score: 3'
+      #End If
+  if score2_int == 4:
+      score2 = 'Score: 4'
+      #End If
+  if score2_int == 5:
+      score2 = 'Score: 5'
+      winner = 'Computer Wins!'
+      colour = WHITE
+      #End If
   x_val = x_val + x_direction
   y_val = y_val + y_direction
   y_ai = y_ai + ai_direction
@@ -116,6 +159,15 @@ while not done:
   pygame.draw.rect(screen, BLUE, (x_val,y_val,ball_width,ball_width))
   pygame.draw.rect(screen, WHITE, (x_padd, y_padd, padd_length, padd_width))
   pygame.draw.rect(screen, YELLOW, (x_ai, y_ai, ai_length, ai_width))
+  font = pygame.font.SysFont('Calibri', 25, True, False)
+  text = font.render(score, True, WHITE)
+  screen.blit(text, [10, 10])
+  font = pygame.font.SysFont('Calibri', 25, True, False)
+  text = font.render(score2, True, WHITE)
+  screen.blit(text, [550, 10])
+  font = pygame.font.SysFont('Calibri', 60, True, False)
+  text = font.render(winner, True, colour)
+  screen.blit(text, [200, 240])
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
