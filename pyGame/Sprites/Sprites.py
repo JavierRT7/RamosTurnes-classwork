@@ -17,7 +17,9 @@ pygame.display.set_caption("Snow")
 ## -- Define the class snow which is a sprite
 class Snow(pygame.sprite.Sprite):
   # Define the constructor for snow
-  def __init__(self, color, width, height):
+  def __init__(self, color, width, height, speed):
+    # Set speed of the sprite
+    self.speed = speed
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
@@ -29,7 +31,9 @@ class Snow(pygame.sprite.Sprite):
     self.rect.y = random.randrange(0, 400)
   #End Procedure
 #End Class
-
+# Class update function - runs for each pass through the game loop
+def update(self):
+    self.rect.y = self.rect.y + self.speed
 # -- Exit game flag set to false
 done = False
 # Create a list of the snow blocks
@@ -39,11 +43,10 @@ all_sprites_group = pygame.sprite.Group()
 # Create the snowflakes
 number_of_flakes = 50 # we are creating 50 snowflakes
 for x in range (number_of_flakes):
-    my_snow = snow(WHITE, 5, 5) # snowflakes are white with size 5 by 5 px
+    my_snow = snow(WHITE, 5, 5, 1) # snowflakes are white with size 5 by 5 px
     snow_group.add (my_snow) # adds the new snowflake to the group of snowflakes
     all_sprites_group.add (my_snow) # adds it to the group of all Sprites
 #Next x
-
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 ### -- Game Loop
@@ -55,6 +58,7 @@ while not done:
     #End If
   #Next event
   # -- Game logic goes after this comment
+  all_sprites_group.update()
   # -- Screen background is BLACK
   screen.fill (BLACK)
   # -- Draw here
