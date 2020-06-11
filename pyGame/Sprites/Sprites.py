@@ -32,7 +32,7 @@ class Snow(pygame.sprite.Sprite):
   #End Procedure
 #End Class
 # Class update function - runs for each pass through the game loop
-def update(self):
+  def update(self):
     self.rect.y = self.rect.y + self.speed
 # -- Exit game flag set to false
 done = False
