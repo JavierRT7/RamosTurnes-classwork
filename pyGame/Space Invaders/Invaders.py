@@ -13,9 +13,9 @@ pygame.init()
 size = (640,480)
 screen = pygame.display.set_mode(size)
 # -- Title of new window/screen
-pygame.display.set_caption("Invaders")
-## -- Define the class invader which is a sprite
-class invader(pygame.sprite.Sprite):
+pygame.display.set_caption("Snow")
+## -- Define the class snow which is a sprite
+class Invader(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height, speed):
     # Set speed of the sprite
@@ -32,11 +32,10 @@ class invader(pygame.sprite.Sprite):
   #End Procedure
 #End Class
 # Class update function - runs for each pass through the game loop
-def update(self):
+  def update(self):
     self.rect.y = self.rect.y + self.speed
-## -- Define the class player which is a sprite
-class player(pygame.sprite.Sprite):
-  # Define the constructor for player
+class Player(pygame.sprite.Sprite):
+  # Define the constructor for snow
   def __init__(self, color, width, height):
     # Set speed of the sprite
     self.speed = 0
@@ -47,25 +46,32 @@ class player(pygame.sprite.Sprite):
     self.image.fill(color)
     # Set the position of the sprite
     self.rect = self.image.get_rect()
-    self.rect.x = random.randrange(0, 600)
-    self.rect.y = random.randrange(0, -50)
+    self.rect.x = 10
+    self.rect.y = 300
   #End Procedure
 #End Class
 # Class update function - runs for each pass through the game loop
-def update(self):
+  def update(self):
     self.rect.y = self.rect.y + self.speed
 # -- Exit game flag set to false
 done = False
 # Create a list of the snow blocks
 invader_group = pygame.sprite.Group()
+player_group = pygame.sprite.Group()
 # Create a list of all sprites
 all_sprites_group = pygame.sprite.Group()
 # Create the snowflakes
-number_of_flakes = 50 # we are creating 50 snowflakes
-for x in range (number_of_flakes):
-    my_invader = invader(BLUE, 10, 10, 1) # snowflakes are white with size 5 by 5 px
+number_of_invaders = 50 # we are creating 50 snowflakes
+for x in range (number_of_invaders):
+    my_invader = Invader(WHITE, 5, 5, 1) # snowflakes are white with size 5 by 5 px
     invader_group.add (my_invader) # adds the new snowflake to the group of snowflakes
     all_sprites_group.add (my_invader) # adds it to the group of all Sprites
+#Next x
+number_of_players = 1 # we are creating 50 snowflakes
+for x in range (number_of_players):
+    my_player = Player(YELLOW, 10, 10) # snowflakes are white with size 5 by 5 px
+    player_group.add (my_player) # adds the new snowflake to the group of snowflakes
+    all_sprites_group.add (my_player) # adds it to the group of all Sprites
 #Next x
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
@@ -89,4 +95,3 @@ while not done:
   clock.tick(60)
 #End While - End of game loop
 pygame.quit()
-
