@@ -15,7 +15,7 @@ screen = pygame.display.set_mode(size)
 # -- Title of new window/screen
 pygame.display.set_caption("Space Invaders")
 ## -- Define the class snow which is a sprite
-class pnvader(pygame.sprite.Sprite):
+class invader(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height, speed):
     # Set speed of the sprite
