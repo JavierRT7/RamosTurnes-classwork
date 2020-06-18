@@ -48,13 +48,15 @@ class Player(pygame.sprite.Sprite):
     self.image.fill(color)
     # Set the position of the sprite
     self.rect = self.image.get_rect()
+    self.rect.x = 10
+    self.rect.y = 300
     ### SRC - I'm not sure what the line below was trying to do...
     ##self.rect = (300, size[0] - height)
   #End Procedure
 
 # Class update function - runs for each pass through the game loop
   def update(self):
-    self.rect.y = self.rect.y + self.speed
+    self.rect.x = self.rect.x + self.speed
 #End Class
 
 
@@ -86,12 +88,12 @@ while not done:
       done = True
     elif event.type == pygame.KEYDOWN: # - a key is down
       if event.key == pygame.K_LEFT: # - if the left key pressed
-        player.player_set_speed(-3) # speed set to -3
+        player.speed = -3 # speed set to -3
       elif event.key == pygame.K_RIGHT: # - if the right key pressed
-        player.player_set_speed(3) # speed set to 3
+        player.speed = 3 # speed set to 3
     elif event.type == pygame.KEYUP: # - a key released
       if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-        player.player_set_speed(0) # speed set to 0
+        player.speed = 0 # speed set to 0
   #Next event
   # -- Game logic goes after this comment
   all_sprites_group.update()
