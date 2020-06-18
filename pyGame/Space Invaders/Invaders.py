@@ -28,12 +28,14 @@ class Invader(pygame.sprite.Sprite):
     # Set the position of the sprite
     self.rect = self.image.get_rect()
     self.rect.x = random.randrange(0, 600)
-    self.rect.y = random.randrange(0, -50)
+    ### SRC - If the range has to produce negative numbers you need -1 at the end
+    self.rect.y = random.randrange(0, -50, -1)
   #End Procedure
 #End Class
 # Class update function - runs for each pass through the game loop
   def update(self):
     self.rect.y = self.rect.y + self.speed
+    
 class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height):
@@ -46,12 +48,17 @@ class Player(pygame.sprite.Sprite):
     self.image.fill(color)
     # Set the position of the sprite
     self.rect = self.image.get_rect()
-    self.rect = (300, size[0] - height)
+    ### SRC - I'm not sure what the line below was trying to do...
+    ##self.rect = (300, size[0] - height)
   #End Procedure
-#End Class
+
 # Class update function - runs for each pass through the game loop
   def update(self):
     self.rect.y = self.rect.y + self.speed
+#End Class
+
+
+    
 # -- Exit game flag set to false
 done = False
 # Create a list of the snow blocks
