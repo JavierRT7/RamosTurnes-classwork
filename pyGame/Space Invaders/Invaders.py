@@ -49,7 +49,7 @@ class Player(pygame.sprite.Sprite):
     # Set the position of the sprite
     self.rect = self.image.get_rect()
     self.rect.x = 10
-    self.rect.y = 300
+    self.rect.y = 470
     ### SRC - I'm not sure what the line below was trying to do...
     ##self.rect = (300, size[0] - height)
   #End Procedure
@@ -58,11 +58,11 @@ class Player(pygame.sprite.Sprite):
   def update(self):
     self.rect.x = self.rect.x + self.speed
 #End Class
-
-
     
 # -- Exit game flag set to false
 done = False
+lives = 5
+Lives = "Lives: 5"
 # Create a list of the snow blocks
 invader_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
@@ -96,10 +96,33 @@ while not done:
         player.speed = 0 # speed set to 0
   #Next event
   # -- Game logic goes after this comment
+  # -- when invader hits the player add 5 to score.
+  player_hit_group = pygame.sprite.spritecollide(player, invader_group, True)
+  for foo in player_hit_group:
+    lives = lives - 1
+    if lives == 4:
+      Lives = "Lives: 4"
+    #End If
+    if lives == 3:
+      Lives = "Lives: 3"
+    #End If
+    if lives == 2:
+      Lives = "Lives: 2"
+    #End If
+    if lives == 1:
+      Lives = "Lives: 1"
+    #End If
+    if lives == 0:
+      Lives = "Lives: 0"
+    #End If
+  #Next Event
   all_sprites_group.update()
   # -- Screen background is BLACK
   screen.fill (BLACK)
   # -- Draw here
+  font = pygame.font.SysFont('Calibri', 25, True, False)
+  text = font.render(Lives, True, WHITE)
+  screen.blit(text, [10, 10])
   all_sprites_group.draw (screen)
   # -- flip display to reveal new position of objects
   pygame.display.flip()
