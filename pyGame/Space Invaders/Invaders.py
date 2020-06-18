@@ -15,7 +15,7 @@ screen = pygame.display.set_mode(size)
 # -- Title of new window/screen
 pygame.display.set_caption("Space Invaders")
 ## -- Define the class snow which is a sprite
-class invader(pygame.sprite.Sprite):
+class Invader(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height, speed):
     # Set speed of the sprite
@@ -28,13 +28,13 @@ class invader(pygame.sprite.Sprite):
     # Set the position of the sprite
     self.rect = self.image.get_rect()
     self.rect.x = random.randrange(0, 600)
-    self.rect.y = random.randrange(0, 300)
+    self.rect.y = random.randrange(0, -50)
   #End Procedure
 #End Class
 # Class update function - runs for each pass through the game loop
   def update(self):
     self.rect.y = self.rect.y + self.speed
-class player(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height):
     # Set speed of the sprite
@@ -46,8 +46,7 @@ class player(pygame.sprite.Sprite):
     self.image.fill(color)
     # Set the position of the sprite
     self.rect = self.image.get_rect()
-    self.rect.x = 10
-    self.rect.y = 300
+    self.rect = (300, size[0] - height)
   #End Procedure
 #End Class
 # Class update function - runs for each pass through the game loop
@@ -63,11 +62,11 @@ all_sprites_group = pygame.sprite.Group()
 # Create the snowflakes
 number_of_invaders = 10 # we are creating 50 snowflakes
 for x in range (number_of_invaders):
-    my_invader = invader(BLUE, 10, 10, 1) # snowflakes are white with size 5 by 5 px
+    my_invader = Invader(BLUE, 10, 10, 1) # snowflakes are white with size 5 by 5 px
     invader_group.add (my_invader) # adds the new snowflake to the group of snowflakes
     all_sprites_group.add (my_invader) # adds it to the group of all Sprites
 #Next x
-player = player(YELLOW, 10, 10) # snowflakes are white with size 5 by 5 px
+player = Player(YELLOW, 10, 10) # snowflakes are white with size 5 by 5 px
 player_group.add (player) # adds the new snowflake to the group of snowflakes
 all_sprites_group.add (player) # adds it to the group of all Sprites
 # -- Manages how fast screen refreshes
