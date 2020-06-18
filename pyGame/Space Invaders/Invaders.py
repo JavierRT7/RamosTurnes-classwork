@@ -13,9 +13,9 @@ pygame.init()
 size = (640,480)
 screen = pygame.display.set_mode(size)
 # -- Title of new window/screen
-pygame.display.set_caption("Snow")
+pygame.display.set_caption("Space Invaders")
 ## -- Define the class snow which is a sprite
-class Invader(pygame.sprite.Sprite):
+class pnvader(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height, speed):
     # Set speed of the sprite
@@ -28,13 +28,13 @@ class Invader(pygame.sprite.Sprite):
     # Set the position of the sprite
     self.rect = self.image.get_rect()
     self.rect.x = random.randrange(0, 600)
-    self.rect.y = random.randrange(0, -50)
+    self.rect.y = random.randrange(0, 300)
   #End Procedure
 #End Class
 # Class update function - runs for each pass through the game loop
   def update(self):
     self.rect.y = self.rect.y + self.speed
-class Player(pygame.sprite.Sprite):
+class player(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height):
     # Set speed of the sprite
@@ -61,27 +61,31 @@ player_group = pygame.sprite.Group()
 # Create a list of all sprites
 all_sprites_group = pygame.sprite.Group()
 # Create the snowflakes
-number_of_invaders = 50 # we are creating 50 snowflakes
+number_of_invaders = 10 # we are creating 50 snowflakes
 for x in range (number_of_invaders):
-    my_invader = Invader(WHITE, 5, 5, 1) # snowflakes are white with size 5 by 5 px
+    my_invader = invader(BLUE, 10, 10, 1) # snowflakes are white with size 5 by 5 px
     invader_group.add (my_invader) # adds the new snowflake to the group of snowflakes
     all_sprites_group.add (my_invader) # adds it to the group of all Sprites
 #Next x
-number_of_players = 1 # we are creating 50 snowflakes
-for x in range (number_of_players):
-    my_player = Player(YELLOW, 10, 10) # snowflakes are white with size 5 by 5 px
-    player_group.add (my_player) # adds the new snowflake to the group of snowflakes
-    all_sprites_group.add (my_player) # adds it to the group of all Sprites
-#Next x
+player = player(YELLOW, 10, 10) # snowflakes are white with size 5 by 5 px
+player_group.add (player) # adds the new snowflake to the group of snowflakes
+all_sprites_group.add (player) # adds it to the group of all Sprites
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 ### -- Game Loop
 while not done:
-  # -- User input and controls
+  # -- User inputs here
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       done = True
-    #End If
+    elif event.type == pygame.KEYDOWN: # - a key is down
+      if event.key == pygame.K_LEFT: # - if the left key pressed
+        player.player_set_speed(-3) # speed set to -3
+      elif event.key == pygame.K_RIGHT: # - if the right key pressed
+        player.player_set_speed(3) # speed set to 3
+    elif event.type == pygame.KEYUP: # - a key released
+      if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+        player.player_set_speed(0) # speed set to 0
   #Next event
   # -- Game logic goes after this comment
   all_sprites_group.update()
