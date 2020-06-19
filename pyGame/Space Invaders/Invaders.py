@@ -79,29 +79,50 @@ class Bullet(pygame.sprite.Sprite):
   def update(self):
     self.rect.y = self.rect.y - self.speed
 #End Class
-    
+class Bottom(pygame.sprite.Sprite):
+  # Define the constructor for snow
+  def __init__(self, color, width, height):
+    # Set speed of the sprite
+    self.speed = 0
+    # Call the sprite constructor
+    super().__init__()
+    # Create a sprite and fill it with colour
+    self.image = pygame.Surface([width,height])
+    self.image.fill(color)
+    # Set the position of the sprite
+    self.rect = self.image.get_rect()
+    self.rect.x = 0
+    self.rect.y = 480
+    ### SRC - I'm not sure what the line below was trying to do...
+    ##self.rect = (300, size[0] - height)
+  #End Procedure   
 # -- Exit game flag set to false
 done = False
 lives = 5
 Lives = "Lives: 5"
 score = 0
-Score = "Score: 0" 
+Score = "Score: 0"
+Bullets = "Bullets: 50"
 # Create a list of the snow blocks
 invader_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 bullet_group = pygame.sprite.Group()
+bottom_group = pygame.sprite.Group()
 # Create a list of all sprites
 all_sprites_group = pygame.sprite.Group()
 # Create the snowflakes
 number_of_invaders = 10 # we are creating 50 snowflakes
 for x in range (number_of_invaders):
-    my_invader = Invader(BLUE, 10, 10, 1) # snowflakes are white with size 5 by 5 px
-    invader_group.add (my_invader) # adds the new snowflake to the group of snowflakes
-    all_sprites_group.add (my_invader) # adds it to the group of all Sprites
+    invader = Invader(BLUE, 10, 10, 1) # snowflakes are white with size 5 by 5 px
+    invader_group.add (invader) # adds the new snowflake to the group of snowflakes
+    all_sprites_group.add (invader) # adds it to the group of all Sprites
 #Next x
 player = Player(YELLOW, 10, 10, 50) # snowflakes are white with size 5 by 5 px
 player_group.add (player) # adds the new snowflake to the group of snowflakes
 all_sprites_group.add (player) # adds it to the group of all Sprites
+bottom = Bottom(BLACK, 700, 10) # snowflakes are white with size 5 by 5 px
+bottom_group.add (bottom) # adds the new snowflake to the group of snowflakes
+all_sprites_group.add (bottom) # adds it to the group of all Sprites
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 ### -- Game Loop
@@ -129,56 +150,18 @@ while not done:
   bullet_hit_group = pygame.sprite.groupcollide(bullet_group, invader_group, dokilla=False, dokillb=True, collided=None)
   for foo in bullet_hit_group:
           score = score + 5
-          if score == 5:
-            Score = "Score: 5"
-          #End If
-          if score == 10:
-            Score = "Score: 10"
-          #End If
-          if score == 15:
-            Score = "Score: 15"
-          #End If
-          if score == 20:
-            Score = "Score: 20"
-          #End If
-          if score == 25:
-            Score = "Score: 25"
-          #End If
-          if score == 30:
-            Score = "Score: 30"
-          #End If
-          if score == 35:
-            Score = "Score: 35"
-          #End If
-          if score == 40:
-            Score = "Score: 40"
-          #End If
-          if score == 45:
-            Score = "Score: 45"
-          #End If
-          if score == 50:
-            Score = "Score: 50"
-          #End If
+          Score = "Score: " + str(score)
+          Bullets = "Bullets: " + str(player.bullet_count)
   #Next Event
   # -- when invader hits the player add 5 to score.
   player_hit_group = pygame.sprite.spritecollide(player, invader_group, True)
   for foo in player_hit_group:
     lives = lives - 1
-    if lives == 4:
-      Lives = "Lives: 4"
-    #End If
-    if lives == 3:
-      Lives = "Lives: 3"
-    #End If
-    if lives == 2:
-      Lives = "Lives: 2"
-    #End If
-    if lives == 1:
-      Lives = "Lives: 1"
-    #End If
-    if lives == 0:
-      Lives = "Lives: 0"
-    #End If
+    Lives = "Lives: " + str(lives)
+  #Next Event
+  bottom_hit_group = pygame.sprite.spritecollide(invader, bottom_group, True)
+  for foo in bottom_hit_group:
+    invader.rect.y = 0
   #Next Event
   all_sprites_group.update()
   # -- Screen background is BLACK
@@ -190,6 +173,9 @@ while not done:
   font = pygame.font.SysFont('Calibri', 25, True, False)
   text = font.render(Score, True, WHITE)
   screen.blit(text, [10, 30])
+  font = pygame.font.SysFont('Calibri', 25, True, False)
+  text = font.render(Bullets, True, WHITE)
+  screen.blit(text, [10, 50])
   all_sprites_group.draw (screen)
   # -- flip display to reveal new position of objects
   pygame.display.flip()
