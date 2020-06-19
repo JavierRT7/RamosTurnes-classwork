@@ -126,6 +126,40 @@ while not done:
         player.bullet_count = player.bullet_count - 1
   #Next event
   # -- Game logic goes after this comment
+  bullet_hit_group = pygame.sprite.groupcollide(bullet_group, invader_group, dokilla=False, dokillb=True, collided=None)
+  for foo in bullet_hit_group:
+          score = score + 5
+          if score == 5:
+            Score = "Score: 5"
+          #End If
+          if score == 10:
+            Score = "Score: 10"
+          #End If
+          if score == 15:
+            Score = "Score: 15"
+          #End If
+          if score == 20:
+            Score = "Score: 20"
+          #End If
+          if score == 25:
+            Score = "Score: 25"
+          #End If
+          if score == 30:
+            Score = "Score: 30"
+          #End If
+          if score == 35:
+            Score = "Score: 35"
+          #End If
+          if score == 40:
+            Score = "Score: 40"
+          #End If
+          if score == 45:
+            Score = "Score: 45"
+          #End If
+          if score == 50:
+            Score = "Score: 50"
+          #End If
+  #Next Event
   # -- when invader hits the player add 5 to score.
   player_hit_group = pygame.sprite.spritecollide(player, invader_group, True)
   for foo in player_hit_group:
@@ -146,40 +180,6 @@ while not done:
       Lives = "Lives: 0"
     #End If
   #Next Event
-  bullet_hit_group = pygame.sprite.spritecollide(bullet, invader_group, True)
-  for foo in bullet_hit_group:
-    score = score + 5
-    if score == 5:
-      Score = "Score: 5"
-    #End If
-    if score == 10:
-      Score = "Score: 10"
-    #End If
-    if score == 15:
-      Score = "Score: 15"
-    #End If
-    if score == 20:
-      Score = "Score: 20"
-    #End If
-    if score == 25:
-      Score = "Score: 25"
-    #End If
-    if score == 30:
-      Score = "Score: 30"
-    #End If
-    if score == 35:
-      Score = "Score: 35"
-    #End If
-    if score == 40:
-      Score = "Score: 40"
-    #End If
-    if score == 45:
-      Score = "Score: 45"
-    #End If
-    if score == 50:
-      Score = "Score: 50"
-    #End If
-  #Next Event
   all_sprites_group.update()
   # -- Screen background is BLACK
   screen.fill (BLACK)
@@ -187,6 +187,9 @@ while not done:
   font = pygame.font.SysFont('Calibri', 25, True, False)
   text = font.render(Lives, True, WHITE)
   screen.blit(text, [10, 10])
+  font = pygame.font.SysFont('Calibri', 25, True, False)
+  text = font.render(Score, True, WHITE)
+  screen.blit(text, [10, 30])
   all_sprites_group.draw (screen)
   # -- flip display to reveal new position of objects
   pygame.display.flip()
