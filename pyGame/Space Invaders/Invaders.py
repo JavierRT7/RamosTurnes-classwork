@@ -145,13 +145,13 @@ while not done:
         bullet_group.add (bullet) # adds the new snowflake to the group of snowflakes
         all_sprites_group.add (bullet) # adds it to the group of all Sprites
         player.bullet_count = player.bullet_count - 1
+        Bullets = "Bullets: " + str(player.bullet_count)
   #Next event
   # -- Game logic goes after this comment
   bullet_hit_group = pygame.sprite.groupcollide(bullet_group, invader_group, dokilla=False, dokillb=True, collided=None)
   for foo in bullet_hit_group:
           score = score + 5
           Score = "Score: " + str(score)
-          Bullets = "Bullets: " + str(player.bullet_count)
   #Next Event
   # -- when invader hits the player add 5 to score.
   player_hit_group = pygame.sprite.spritecollide(player, invader_group, True)
