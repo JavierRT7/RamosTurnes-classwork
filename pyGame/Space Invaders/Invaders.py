@@ -29,7 +29,6 @@ class Invader(pygame.sprite.Sprite):
     # Set the position of the sprite
     self.rect = self.image.get_rect()
     self.rect.x = random.randrange(0, 600)
-    ### SRC - If the range has to produce negative numbers you need -1 at the end
     self.rect.y = random.randrange(0, -50, -1)
   #End Procedure
 #End Class
