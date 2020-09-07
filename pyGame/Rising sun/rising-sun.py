@@ -46,7 +46,7 @@ while not done:
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
-  clock.tick(15) ### SRC - 15fps is a bit slow, makes jerky animation
+  clock.tick(60) ### SRC - 15fps is a bit slow, makes jerky animation
 #End While - End of game loop
 pygame.quit()
 
