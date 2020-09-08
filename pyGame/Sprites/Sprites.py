@@ -43,7 +43,7 @@ all_sprites_group = pygame.sprite.Group()
 # Create the snowflakes
 number_of_flakes = 50 # we are creating 50 snowflakes
 for x in range (number_of_flakes):
-    my_snow = Snow(WHITE, 5, 5, 1) # snowflakes are white with size 5 by 5 px
+    my_snow = Snow(WHITE, 5, 5, 1) # snowflakes are white with size 5x5 px
     snow_group.add (my_snow) # adds the new snowflake to the group of snowflakes
     all_sprites_group.add (my_snow) # adds it to the group of all Sprites
 #Next x
