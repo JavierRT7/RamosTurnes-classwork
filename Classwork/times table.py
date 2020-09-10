@@ -10,7 +10,7 @@ while answer == False:
        answer = True
    # End If
 # End While
-for counter in range (1, 150):
+for counter in range (1, 21):
    multiplied = table * counter
    print(table, "multiplied by", counter , "is", multiplied)
 # Next
