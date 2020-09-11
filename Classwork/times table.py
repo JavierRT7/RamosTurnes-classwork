@@ -12,7 +12,7 @@ while answer == False:
 # End While
 for counter in range (1, 21):
    multiplied = table * counter
-   print(table, "multiplied by", counter , "is", multiplied)
+   print(table, "multiplied by", counter, "is", multiplied)
 # Next
 
 
