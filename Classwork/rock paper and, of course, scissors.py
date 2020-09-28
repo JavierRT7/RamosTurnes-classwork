@@ -5,7 +5,7 @@ computer_choice = 1
 answer = 1
 while playing == True:
     player_choice = int(input("Enter your choice: enter 1 for rock, 2 for paper or 3 for scissors"))
-    computer_choice = randint(1,4)
+    computer_choice = random.randint(1,4)
     if player_choice + 2 == computer_choice:
         print("You win!")
     elif computer_choice + 2 == player_choice:
