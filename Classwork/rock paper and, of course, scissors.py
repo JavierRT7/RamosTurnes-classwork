@@ -1,3 +1,4 @@
+import random
 playing = True
 player_choice = 1
 computer_choice = 1
