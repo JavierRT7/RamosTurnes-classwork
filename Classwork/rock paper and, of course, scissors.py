@@ -14,6 +14,8 @@ while playing == True:
         print("Computer wins!")
     elif computer_choice + 1 == player_choice:
         print("You win!")
+    elif computer_choice == player_choice:
+        print("It's a draw!")
     #End If
     answer = int(input("Would you like to play again? Type 1 for yes or type 2 for no"))
     if answer == 2:
