@@ -1,3 +1,7 @@
+### SRC - I think you are on to something here
+### I like the mathematical approach, but this
+### code didn't work for me, and there's no validation.
+
 import random
 playing = True
 player_choice = 1
