@@ -8,6 +8,9 @@ def subroutine(array):
         choice = input("Enter your choice:")
         if choice.isdigit:
             choice = int(choice)
+            if choice > 3 or choice < 1:
+                print("Invalid choice")
+            #End If
         else:
             print("Invalid choice")
         #End If
@@ -15,8 +18,6 @@ def subroutine(array):
     if choice == 1:
         name = input("Enter the name to be added to the list")
         choice = 4
-    #End If
-    if choice == 2:
         location = input("Enter the position in the list to insert the name:")
         if location.isdigit:
             location = int(location)
@@ -25,8 +26,14 @@ def subroutine(array):
         else:
             print("Invalid choice")
         #End If
+        choice = 4
     #End If 
-    choice = 4
+    if choice == 2:
+        for counter in range(0, 9):
+            print(array[counter])
+        #Next
+        choice = 4
+    #End If
   #End While
   print("Program terminated")
 #End Procedure
