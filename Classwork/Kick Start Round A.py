@@ -5,12 +5,20 @@ for counter in range(cases_T):
     for count in range(houses_N):
         x = input()
         if x.isdigit():
-            prices_A[count] = int(x)
+            prices_A.insert(count, int(x))
         #End If
     #Next
-    print(prices_A)
     prices_A.sort()
-    print(prices_A)
+    x = 0
+    for x in range(houses_N):
+        if (dollars_B - prices_A[x]) > 0:
+            dollars_B = dollars_B - prices_A[x]
+        else:
+            print("Case #", counter + 1, ":", x)
+        #End If
+    #Next 
+#Next
+
 
 
 
