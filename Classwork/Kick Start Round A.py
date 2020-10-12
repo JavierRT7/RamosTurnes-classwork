@@ -11,13 +11,11 @@ for counter in range(cases_T):
     prices_A.sort()
     x = 0
     answer = 0
-    for x in range(houses_N):
-        if (dollars_B - prices_A[x]) > 0:
-            dollars_B = dollars_B - prices_A[x]
-        else:
-            answer = x
-        #End If
-    #Next
+    while dollars_B > -1:
+        dollars_B = dollars_B - prices_A[x]
+        x = x + 1
+    #End While
+    answer = x - 1
     print("Case #", counter + 1, ":", answer) 
 #Next
 
