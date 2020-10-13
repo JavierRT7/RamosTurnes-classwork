@@ -3,10 +3,7 @@ for counter in range(cases_T):
     houses_N, dollars_B = [int(x) for x in input().split()]
     prices_A = []
     for count in range(houses_N):
-        x = input()
-        if x.isdigit():
-            prices_A.insert(count, int(x))
-        #End If
+        x = int(input())
     #Next
     prices_A.sort()
     x = 0
