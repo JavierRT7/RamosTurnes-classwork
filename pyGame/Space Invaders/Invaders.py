@@ -78,22 +78,6 @@ class Bullet(pygame.sprite.Sprite):
   def update(self):
     self.rect.y = self.rect.y - self.speed
 #End Class
-class Bottom(pygame.sprite.Sprite):
-  # Define the constructor for snow
-  def __init__(self, color, width, height):
-    # Set speed of the sprite
-    self.speed = 0
-    # Call the sprite constructor
-    super().__init__()
-    # Create a sprite and fill it with colour
-    self.image = pygame.Surface([width,height])
-    self.image.fill(color)
-    # Set the position of the sprite
-    self.rect = self.image.get_rect()
-    self.rect.x = 0
-    self.rect.y = 480
-    ### SRC - I'm not sure what the line below was trying to do...
-    ##self.rect = (300, size[0] - height)
   #End Procedure   
 # -- Exit game flag set to false
 done = False
@@ -119,9 +103,6 @@ for x in range (number_of_invaders):
 player = Player(YELLOW, 10, 10, 50) # snowflakes are white with size 5 by 5 px
 player_group.add (player) # adds the new snowflake to the group of snowflakes
 all_sprites_group.add (player) # adds it to the group of all Sprites
-bottom = Bottom(BLACK, 700, 10) # snowflakes are white with size 5 by 5 px
-bottom_group.add (bottom) # adds the new snowflake to the group of snowflakes
-all_sprites_group.add (bottom) # adds it to the group of all Sprites
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 ### -- Game Loop
@@ -157,10 +138,6 @@ while not done:
   for foo in player_hit_group:
     lives = lives - 1
     Lives = "Lives: " + str(lives)
-  #Next Event
-  bottom_hit_group = pygame.sprite.spritecollide(invader, bottom_group, True)
-  for foo in bottom_hit_group:
-    invader.rect.y = 0
   #Next Event
   all_sprites_group.update()
   # -- Screen background is BLACK
