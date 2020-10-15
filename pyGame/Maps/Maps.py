@@ -26,6 +26,30 @@ class tile(pygame.sprite.Sprite):
         # Set the position of the player attributes
         self.rect.x = x_ref
         self.rect.y = y_ref
+    #End Procedure
+#End Class
+class Player(pygame.sprite.Sprite):
+  # Define the constructor for snow
+  def __init__(self, color, width, height):
+    # Set speed of the sprite
+    self.speed_x = 0
+    self.speed_y = 0
+    # Call the sprite constructor
+    super().__init__()
+    # Create a sprite and fill it with colour
+    self.image = pygame.Surface([width,height])
+    self.image.fill(color)
+    # Set the position of the sprite
+    self.rect = self.image.get_rect()
+    self.rect.x = 20
+    self.rect.y = 20
+  #End Procedure
+
+# Class update function - runs for each pass through the game loop
+  def update(self):
+    self.rect.x = self.rect.x + self.speed_x
+    self.rect.y = self.rect.y + self.speed_y
+#End Class
 map = [[1,1,1,1,1,1,1,1,1,1],
 [1,0,0,0,0,0,0,0,0,1],
 [1,0,0,0,1,0,0,0,0,1],
@@ -41,6 +65,7 @@ done = False
 all_sprites_list = pygame.sprite.Group()
 # Create a list of tiles for the walls
 wall_list = pygame.sprite.Group()
+player_list = pygame.sprite.Group()
 # Create walls on the screen (each tile is 20 x 20 so alter cords)
 for y in range(10):
     for x in range (10):
@@ -48,6 +73,12 @@ for y in range(10):
             my_wall = tile(BLUE, 20, 20, x*20, y *20)
             wall_list.add(my_wall)
             all_sprites_list.add(my_wall)
+        #End If
+    #Next
+#Next
+pacman = Player(YELLOW, 10, 10)
+player_list.add(pacman)
+all_sprites_list.add(pacman)
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 ### -- Game Loop
@@ -56,6 +87,20 @@ while not done:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       done = True
+    elif event.type == pygame.KEYDOWN: # - a key is down
+      if event.key == pygame.K_LEFT: # - if the left key pressed
+        pacman.speed_x = -1 # speed set to -3
+      elif event.key == pygame.K_RIGHT: # - if the right key pressed
+        pacman.speed_x = 1 # speed set to 3
+      elif event.key == pygame.K_UP: # - if the right key pressed
+        pacman.speed_y = 1 # speed set to 3
+      elif event.key == pygame.K_DOWN: # - if the right key pressed
+        pacman.speed_y = 1 # speed set to 3
+    elif event.type == pygame.KEYUP: # - a key released
+      if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+        pacman.speed_x = 0 # speed set to 0
+      if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+        pacman.speed_y = 0
     #End If
   #Next event
   # -- Game logic goes after this comment
