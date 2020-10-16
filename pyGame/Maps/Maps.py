@@ -32,8 +32,7 @@ class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height):
     # Set speed of the sprite
-    self.speed_x = 0
-    self.speed_y = 0
+    self.speed = 0
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
@@ -47,8 +46,19 @@ class Player(pygame.sprite.Sprite):
 
 # Class update function - runs for each pass through the game loop
   def update(self):
-    self.rect.x = self.rect.x + self.speed_x
-    self.rect.y = self.rect.y + self.speed_y
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_UP]:
+      self.rect.y = self.rect.y - 1
+    #End If
+    if keys[pygame.K_DOWN]:
+      self.rect.y = self.rect.y + 1
+    #End If
+    if keys[pygame.K_RIGHT]:
+      self.rect.x = self.rect.x + 1
+    #End If
+    if keys[pygame.K_LEFT]:
+      self.rect.x = self.rect.x - 1
+    #End If
 #End Class
 map = [[1,1,1,1,1,1,1,1,1,1],
 [1,0,0,0,0,0,0,0,0,1],
@@ -87,24 +97,10 @@ while not done:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       done = True
-    elif event.type == pygame.KEYDOWN: # - a key is down
-      if event.key == pygame.K_LEFT: # - if the left key pressed
-        pacman.speed_x = -1 # speed set to -3
-      elif event.key == pygame.K_RIGHT: # - if the right key pressed
-        pacman.speed_x = 1 # speed set to 3
-      elif event.key == pygame.K_UP: # - if the right key pressed
-        pacman.speed_y = 1 # speed set to 3
-      elif event.key == pygame.K_DOWN: # - if the right key pressed
-        pacman.speed_y = 1 # speed set to 3
-    elif event.type == pygame.KEYUP: # - a key released
-      if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-        pacman.speed_x = 0 # speed set to 0
-      if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-        pacman.speed_y = 0
     #End If
   #Next event
   # -- Game logic goes after this comment
-  all_sprites_list.update
+  all_sprites_list.update()
   # -- Screen background is BLACK
   screen.fill (BLACK)
   # -- Draw here

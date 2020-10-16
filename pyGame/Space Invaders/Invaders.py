@@ -35,7 +35,10 @@ class Invader(pygame.sprite.Sprite):
 # Class update function - runs for each pass through the game loop
   def update(self):
     self.rect.y = self.rect.y + self.speed
-    
+    if self.rect.y > 480:
+      self.rect.y = 0
+    #End If
+  #End Procedure
 class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height, bullet_count):
