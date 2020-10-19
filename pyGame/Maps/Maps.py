@@ -32,7 +32,8 @@ class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height):
     # Set speed of the sprite
-    self.player_speed_update = [0,0]
+    self.speed_x = 0
+    self.speed_y = 0
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
@@ -48,22 +49,24 @@ class Player(pygame.sprite.Sprite):
   def update(self):
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP]:
-      self.player_speed_update = [0,-1]
-      self.rect.y = self.rect.y + self.player_speed_update[1]
+      self.speed_y = -1
+      self.rect.y = self.rect.y + self.speed_y
     #End If
     if keys[pygame.K_DOWN]:
-      self.player_speed_update = [0,1]
-      self.rect.y = self.rect.y + self.player_speed_update[1]
+      self.speed_y = 1
+      self.rect.y = self.rect.y + self.speed_y
     #End If
     if keys[pygame.K_RIGHT]:
-      self.player_speed_update = [1,0]
-      self.rect.x = self.rect.x + self.player_speed_update[0]
+      self.speed_x = 1
+      self.rect.x = self.rect.x + self.speed_x
     #End If
     if keys[pygame.K_LEFT]:
-      self.player_speed_update = [-1,0]
-      self.rect.x = self.rect.x + self.player_speed_update[0]
+      self.speed_x = -1
+      self.rect.x = self.rect.x + self.speed_x
     #End If
 #End Class
+pacman_old_x = 20
+pacman_old_y = 20
 map = [[1,1,1,1,1,1,1,1,1,1],
 [1,0,0,0,0,0,0,0,0,1],
 [1,0,0,0,1,0,0,0,0,1],
@@ -107,8 +110,13 @@ while not done:
   player_hit_list = pygame.sprite.spritecollide(pacman, wall_list, False)
   print (pacman.rect.x)
   for foo in player_hit_list:
-    pacman.player_speed_update = [0,0]
+    pacman.speed_x = 0
+    pacman.speed_y = 0
+    pacman.rect.x = pacman_old_x
+    pacman.rect.y = pacman_old_y
   #Next
+  pacman_old_x = pacman.rect.x
+  pacman_old_y = pacman.rect.y
   # -- Game logic goes after this comment
   all_sprites_list.update()
   # -- Screen background is BLACK
