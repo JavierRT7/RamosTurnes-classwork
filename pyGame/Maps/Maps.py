@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height):
     # Set speed of the sprite
-    self.speed = 0
+    self.player_speed_update = [0,0]
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
@@ -48,16 +48,20 @@ class Player(pygame.sprite.Sprite):
   def update(self):
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP]:
-      self.rect.y = self.rect.y - 1
+      self.player_speed_update = [0,-1]
+      self.rect.y = self.rect.y + self.player_speed_update[1]
     #End If
     if keys[pygame.K_DOWN]:
-      self.rect.y = self.rect.y + 1
+      self.player_speed_update = [0,1]
+      self.rect.y = self.rect.y + self.player_speed_update[1]
     #End If
     if keys[pygame.K_RIGHT]:
-      self.rect.x = self.rect.x + 1
+      self.player_speed_update = [1,0]
+      self.rect.x = self.rect.x + self.player_speed_update[0]
     #End If
     if keys[pygame.K_LEFT]:
-      self.rect.x = self.rect.x - 1
+      self.player_speed_update = [-1,0]
+      self.rect.x = self.rect.x + self.player_speed_update[0]
     #End If
 #End Class
 map = [[1,1,1,1,1,1,1,1,1,1],
@@ -99,6 +103,12 @@ while not done:
       done = True
     #End If
   #Next event
+  # -- Check for collisions between pacman and wall tiles
+  player_hit_list = pygame.sprite.spritecollide(pacman, wall_list, False)
+  print (pacman.rect.x)
+  for foo in player_hit_list:
+    pacman.player_speed_update = [0,0]
+  #Next
   # -- Game logic goes after this comment
   all_sprites_list.update()
   # -- Screen background is BLACK
