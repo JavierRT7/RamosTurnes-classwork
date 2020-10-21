@@ -5,6 +5,7 @@ BLACK = (0,0,0)
 WHITE = (255,255,255)
 BLUE = (50,50,255)
 YELLOW = (255,255,0)
+RED = (255,50,50)
 # -- Initialise PyGame
 pygame.init()
 # -- Blank Screen
@@ -65,6 +66,26 @@ class Player(pygame.sprite.Sprite):
       self.rect.x = self.rect.x + self.speed_x
     #End If
 #End Class
+class Enemy(pygame.sprite.Sprite):
+  # Define the constructor for snow
+  def __init__(self, color, width, height):
+    # Set speed of the sprite
+    self.speed2_x = 1
+    self.speed2_y = 1
+    # Call the sprite constructor
+    super().__init__()
+    # Create a sprite and fill it with colour
+    self.image = pygame.Surface([width,height])
+    self.image.fill(color)
+    # Set the position of the sprite
+    self.rect = self.image.get_rect()
+  #End Procedure
+
+  def upate(self):
+    self.rect.x = self.rect.x + self.speed2_x
+    self.rect.y = self.rect.y + self.speed2_y
+  #End Procedure
+#End Class
 pacman_old_x = 20
 pacman_old_y = 20
 map = [[1,1,1,1,1,1,1,1,1,1],
@@ -83,6 +104,7 @@ all_sprites_list = pygame.sprite.Group()
 # Create a list of tiles for the walls
 wall_list = pygame.sprite.Group()
 player_list = pygame.sprite.Group()
+enemy_list = pygame.sprite.Group()
 # Create walls on the screen (each tile is 20 x 20 so alter cords)
 for y in range(10):
     for x in range (10):
@@ -96,6 +118,22 @@ for y in range(10):
 pacman = Player(YELLOW, 10, 10)
 player_list.add(pacman)
 all_sprites_list.add(pacman)
+for counter in range(3):
+  ghost = Enemy(RED, 10, 10)
+  if counter == 0:
+    ghost.rect.x = 170
+    ghost.rect.y = 20
+  elif counter == 1:
+    ghost.rect.x = 170
+    ghost.rect.y = 170
+  elif counter == 2:
+    ghost.rect.x = 20
+    ghost.rect.y = 170
+  #End If
+#Next
+  enemy_list.add(ghost)
+  all_sprites_list.add(ghost)
+#Next
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 ### -- Game Loop
