@@ -34,6 +34,8 @@ class Snow(pygame.sprite.Sprite):
 # Class update function - runs for each pass through the game loop
   def update(self):
     self.rect.y = self.rect.y + self.speed
+    ### SRC - You need to add some code here so that it continues to snow
+    ### while the program runs...
 # -- Exit game flag set to false
 done = False
 # Create a list of the snow blocks
