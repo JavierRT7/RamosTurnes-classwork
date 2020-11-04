@@ -123,14 +123,19 @@ for counter in range(3):
   if counter == 0:
     ghost.rect.x = 170
     ghost.rect.y = 20
+    print(ghost.speed2_x)
+    print(ghost.speed2_y)
   elif counter == 1:
     ghost.rect.x = 170
     ghost.rect.y = 170
+    print(ghost.speed2_x)
+    print(ghost.speed2_y)
   elif counter == 2:
     ghost.rect.x = 20
     ghost.rect.y = 170
+    print(ghost.speed2_x)
+    print(ghost.speed2_y)
   #End If
-#Next
   enemy_list.add(ghost)
   all_sprites_list.add(ghost)
 #Next
@@ -146,7 +151,6 @@ while not done:
   #Next event
   # -- Check for collisions between pacman and wall tiles
   player_hit_list = pygame.sprite.spritecollide(pacman, wall_list, False)
-  print (pacman.rect.x)
   for foo in player_hit_list:
     pacman.speed_x = 0
     pacman.speed_y = 0
