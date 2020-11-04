@@ -79,6 +79,7 @@ class Enemy(pygame.sprite.Sprite):
     self.image.fill(color)
     # Set the position of the sprite
     self.rect = self.image.get_rect()
+    
   #End Procedure
 
   def upate(self):
@@ -120,22 +121,6 @@ player_list.add(pacman)
 all_sprites_list.add(pacman)
 for counter in range(3):
   ghost = Enemy(RED, 10, 10)
-  if counter == 0:
-    ghost.rect.x = 170
-    ghost.rect.y = 20
-    print(ghost.speed2_x)
-    print(ghost.speed2_y)
-  elif counter == 1:
-    ghost.rect.x = 170
-    ghost.rect.y = 170
-    print(ghost.speed2_x)
-    print(ghost.speed2_y)
-  elif counter == 2:
-    ghost.rect.x = 20
-    ghost.rect.y = 170
-    print(ghost.speed2_x)
-    print(ghost.speed2_y)
-  #End If
   enemy_list.add(ghost)
   all_sprites_list.add(ghost)
 #Next
