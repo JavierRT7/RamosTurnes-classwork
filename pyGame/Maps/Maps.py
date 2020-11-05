@@ -68,10 +68,10 @@ class Player(pygame.sprite.Sprite):
 #End Class
 class Enemy(pygame.sprite.Sprite):
   # Define the constructor for snow
-  def __init__(self, color, width, height):
+  def __init__(self, color, width, height, speed2_x, speed2_y):
     # Set speed of the sprite
-    self.speed2_x = 1
-    self.speed2_y = 1
+    self.speed2_x = speed2_x
+    self.speed2_y = speed2_y
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
@@ -82,10 +82,6 @@ class Enemy(pygame.sprite.Sprite):
     
   #End Procedure
 
-  def upate(self):
-    self.rect.x = self.rect.x + self.speed2_x
-    self.rect.y = self.rect.y + self.speed2_y
-  #End Procedure
 #End Class
 pacman_old_x = 20
 pacman_old_y = 20
@@ -120,7 +116,9 @@ pacman = Player(YELLOW, 10, 10)
 player_list.add(pacman)
 all_sprites_list.add(pacman)
 for counter in range(3):
-  ghost = Enemy(RED, 10, 10)
+  ghost = Enemy(RED, 10, 10, 1, 1)
+  ghost.rect.x = 170
+  ghost.rect.y = 170
   enemy_list.add(ghost)
   all_sprites_list.add(ghost)
 #Next
@@ -144,6 +142,8 @@ while not done:
   #Next
   pacman_old_x = pacman.rect.x
   pacman_old_y = pacman.rect.y
+  ghost.rect.x = ghost.speed2_x
+  ghost.rect.y = ghost.speed2_y
   # -- Game logic goes after this comment
   all_sprites_list.update()
   # -- Screen background is BLACK
