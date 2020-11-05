@@ -81,7 +81,8 @@ class Enemy(pygame.sprite.Sprite):
     self.rect = self.image.get_rect()
     
   #End Procedure
-
+  def update(self):
+    
 #End Class
 pacman_old_x = 20
 pacman_old_y = 20
@@ -142,8 +143,6 @@ while not done:
   #Next
   pacman_old_x = pacman.rect.x
   pacman_old_y = pacman.rect.y
-  ghost.rect.x = ghost.speed2_x
-  ghost.rect.y = ghost.speed2_y
   # -- Game logic goes after this comment
   all_sprites_list.update()
   # -- Screen background is BLACK
