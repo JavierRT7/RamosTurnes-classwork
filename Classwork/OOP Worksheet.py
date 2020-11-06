@@ -13,6 +13,18 @@ class Dog:
     def get_colour(self):
         return self.colour
     #End Function
+    class Puppy:
+        def __init__(self, shoesChewed):
+            shoesChewed = 0
+        #end procedure
+        def chewShoe():
+            shoesChewed = shoesChewed + 1
+        #end procedure
+        def getShoesChewed():
+            return shoesChewed
+        #end function
+    #end class
+#end class
 my_dog1 = Dog('Fido')
 my_dog2 = Dog('Rex')
 
@@ -21,6 +33,10 @@ my_dog2 = Dog('Rex')
 my_dog1.set_colour('Brown')
 my_dog1.set_colour('XYZ')
 my_dog2.set_colour('Black')
+puppy = Puppy('Dog')
+for counter in range(1, 3):
+    chewShoe()
+#Next
 
 print(my_dog1.name)
 print(my_dog1.get_colour())
