@@ -18,9 +18,10 @@ pygame.display.set_caption("Space Invaders")
 ## -- Define the class snow which is a sprite
 class Invader(pygame.sprite.Sprite):
   # Define the constructor for snow
-  def __init__(self, color, width, height, speed):
+  def __init__(self, color, width, height, speed, invader_bullet_count):
     # Set speed of the sprite
     self.speed = speed
+    self.invader_bullet_count = 5
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
@@ -35,7 +36,10 @@ class Invader(pygame.sprite.Sprite):
 # Class update function - runs for each pass through the game loop
   def update(self):
     self.rect.y = self.rect.y + self.speed
-    
+    if self.rect.y > 480:
+      self.rect.y = 0
+    #End If
+  #End Procedure
 class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height, bullet_count):
@@ -71,12 +75,33 @@ class Bullet(pygame.sprite.Sprite):
     self.image.fill(color)
     # Set the position of the sprite
     self.rect = self.image.get_rect()
-    self.rect.x = player.rect.x
+    self.rect.x = player.rect.x + 5
     self.rect.y = player.rect.y
   #End Procedure
 # Class update function - runs for each pass through the game loop
   def update(self):
     self.rect.y = self.rect.y - self.speed
+#End Class
+class Invader_Bullet(pygame.sprite.Sprite):
+  # Define the constructor for snow
+  def __init__(self, color, width, height, speed_y, speed_x):
+    # Set speed of the sprite
+    self.speed_y = 2
+    self.speed_x = 2
+    # Call the sprite constructor
+    super().__init__()
+    # Create a sprite and fill it with colour
+    self.image = pygame.Surface([width,height])
+    self.image.fill(color)
+    # Set the position of the sprite
+    self.rect = self.image.get_rect()
+    self.rect.x = player.rect.x + 5
+    self.rect.y = player.rect.y
+  #End Procedure
+# Class update function - runs for each pass through the game loop
+  def update(self):
+    self.rect.y = self.rect.y + self.speed_y
+  #End Procedure
 #End Class
   #End Procedure   
 # -- Exit game flag set to false
@@ -86,6 +111,7 @@ Lives = "Lives: 5"
 score = 0
 Score = "Score: 0"
 Bullets = "Bullets: 50"
+bullets = 50
 # Create a list of the snow blocks
 invader_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
@@ -94,6 +120,7 @@ bullet_group = pygame.sprite.Group()
 all_sprites_group = pygame.sprite.Group()
 # Create the snowflakes
 number_of_invaders = 10 # we are creating 50 snowflakes
+invader_number = number_of_invaders
 for x in range (number_of_invaders):
     invader = Invader(BLUE, 10, 10, 1) # snowflakes are white with size 5 by 5 px
     invader_group.add (invader) # adds the new snowflake to the group of snowflakes
@@ -125,12 +152,14 @@ while not done:
         all_sprites_group.add (bullet) # adds it to the group of all Sprites
         player.bullet_count = player.bullet_count - 1
         Bullets = "Bullets: " + str(player.bullet_count)
+        bullets = bullets - 1
   #Next event
   # -- Game logic goes after this comment
   bullet_hit_group = pygame.sprite.groupcollide(bullet_group, invader_group, dokilla=False, dokillb=True, collided=None)
   for foo in bullet_hit_group:
           score = score + 5
           Score = "Score: " + str(score)
+          invader_number = invader_number - 1
   #Next Event
   # -- when invader hits the player add 5 to score.
   player_hit_group = pygame.sprite.spritecollide(player, invader_group, True)
@@ -152,10 +181,10 @@ while not done:
   text = font.render(Bullets, True, WHITE)
   screen.blit(text, [10, 50])
   all_sprites_group.draw (screen)
+  #End While
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
   clock.tick(60)
 #End While - End of game loop
 pygame.quit()
-
