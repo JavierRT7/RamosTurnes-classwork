@@ -95,8 +95,8 @@ class Invader_Bullet(pygame.sprite.Sprite):
     self.image.fill(color)
     # Set the position of the sprite
     self.rect = self.image.get_rect()
-    self.rect.x = player.rect.x + 5
-    self.rect.y = player.rect.y
+    self.rect.x = invader.rect.x + 5
+    self.rect.y = invader.rect.y
   #End Procedure
 # Class update function - runs for each pass through the game loop
   def update(self):
@@ -112,23 +112,26 @@ score = 0
 Score = "Score: 0"
 Bullets = "Bullets: 50"
 bullets = 50
+invaders = []
 # Create a list of the snow blocks
 invader_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 bullet_group = pygame.sprite.Group()
+invader_bullet_group = pygame.sprite.Group()
 # Create a list of all sprites
 all_sprites_group = pygame.sprite.Group()
 # Create the snowflakes
 number_of_invaders = 10 # we are creating 50 snowflakes
 invader_number = number_of_invaders
 for x in range (number_of_invaders):
-    invader = Invader(BLUE, 10, 10, 1) # snowflakes are white with size 5 by 5 px
-    invader_group.add (invader) # adds the new snowflake to the group of snowflakes
-    all_sprites_group.add (invader) # adds it to the group of all Sprites
+    invaders[x] = Invader(BLUE, 10, 10, 1, 5) # snowflakes are white with size 5 by 5 px
+    invader_group.add (invaders[x]) # adds the new snowflake to the group of snowflakes
+    all_sprites_group.add (invaders[x]) # adds it to the group of all Sprites
 #Next x
 player = Player(YELLOW, 10, 10, 50) # snowflakes are white with size 5 by 5 px
 player_group.add (player) # adds the new snowflake to the group of snowflakes
 all_sprites_group.add (player) # adds it to the group of all Sprites
+
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 ### -- Game Loop
