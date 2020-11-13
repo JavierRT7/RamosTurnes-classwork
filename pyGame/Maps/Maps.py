@@ -88,35 +88,45 @@ class Enemy(pygame.sprite.Sprite):
     self.rect.x = self.rect.x + self.speed2_x
     self.rect.y = self.rect.y + self.speed2_y
     for foo in enemy_hit_list:
-          self.speed2_x = 0
-          self.speed2_y = 0
-          if pacman.rect.x > self.rect.x:
-            self.speed2_x = 1
-          elif pacman.rect.x < self.rect.x:
-            self.speed2_x = -1
-          elif pacman.rect.x == self.rect.x:
-            self.speed2_x = 0
-          #End If
-          if pacman.rect.y > self.rect.y:
-            self.speed2_y = 1
-          elif pacman.rect.y < self.rect.y:
-            self.speed2_y = -1
-          elif pacman.rect.y == self.rect.y:
-            self.speed2_y = 0
-          #End If
+      if self.speed2_x == 1:
+        self.speed2_x = -1
+      elif self.speed2_x == -1:
+        self.speed2_x = 1
+      #End If
+      if self.speed2_y == 1:
+        self.speed2_y = -1
+      elif self.speed2_y == -1:
+        self.speed2_y = 1
+      #End If
     #Next
-    if self.speed2_x == 1 and self.speed2_y == 1:
-      self.speed2_y = 0
-    #End If
-    if self.speed2_x == 1 and self.speed2_y == -1:
-      self.speed2_y = 0
-    #End If
-    if self.speed2_x == -1 and self.speed2_y == 1:
-      self.speed2_x = 0
-    #End If
-    if self.speed2_x == -1 and self.speed2_y == -1:
-      self.speed2_x = 0
-    #End If
+    for foo not in enemy_hit_list:
+      if pacman.rect.x > self.rect.x:
+        self.speed2_x = 1
+      elif pacman.rect.x < self.rect.x:
+        self.speed2_x = -1
+      elif pacman.rect.x == self.rect.x:
+        self.speed2_x = 0
+      #End If
+      if pacman.rect.y > self.rect.y:
+        self.speed2_y = 1
+      elif pacman.rect.y < self.rect.y:
+        self.speed2_y = -1
+      elif pacman.rect.y == self.rect.y:
+        self.speed2_y = 0
+      #End If
+      if self.speed2_x == 1 and self.speed2_y == 1:
+        self.speed2_y = 0
+      #End If
+      if self.speed2_x == 1 and self.speed2_y == -1:
+        self.speed2_y = 0
+      #End If
+      if self.speed2_x == -1 and self.speed2_y == 1:
+        self.speed2_x = 0
+      #End If
+      if self.speed2_x == -1 and self.speed2_y == -1:
+        self.speed2_x = 0
+      #End If
+    #Next
     self.old_x = self.rect.x
     self.old_y = self.rect.y
     self.old_speed2_x = self.rect.x
