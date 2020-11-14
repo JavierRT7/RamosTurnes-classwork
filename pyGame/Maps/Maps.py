@@ -88,18 +88,6 @@ class Enemy(pygame.sprite.Sprite):
     self.rect.x = self.rect.x + self.speed2_x
     self.rect.y = self.rect.y + self.speed2_y
     for foo in enemy_hit_list:
-      if self.speed2_x == 1:
-        self.speed2_x = -1
-      elif self.speed2_x == -1:
-        self.speed2_x = 1
-      #End If
-      if self.speed2_y == 1:
-        self.speed2_y = -1
-      elif self.speed2_y == -1:
-        self.speed2_y = 1
-      #End If
-    #Next
-    for foo not in enemy_hit_list:
       if pacman.rect.x > self.rect.x:
         self.speed2_x = 1
       elif pacman.rect.x < self.rect.x:
