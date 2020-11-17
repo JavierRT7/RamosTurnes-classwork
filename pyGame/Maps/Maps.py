@@ -29,6 +29,20 @@ class tile(pygame.sprite.Sprite):
         self.rect.y = y_ref
     #End Procedure
 #End Class
+class background(pygame.sprite.Sprite):
+    # Define the constructor for invader
+    def __init__(self, color, width, height, x_ref, y_ref):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.Surface([width,height])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        # Set the position of the player attributes
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+    #End Procedure
+#End Class
 class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height):
@@ -88,31 +102,45 @@ class Enemy(pygame.sprite.Sprite):
     self.rect.x = self.rect.x + self.speed2_x
     self.rect.y = self.rect.y + self.speed2_y
     for foo in enemy_hit_list:
-      if pacman.rect.x > self.rect.x:
-        self.speed2_x = 1
-      elif pacman.rect.x < self.rect.x:
+      self.rect.x = self.old_x
+      self.rect.y = self.old_y
+      if self.speed2_x == 1:
         self.speed2_x = -1
-      elif pacman.rect.x == self.rect.x:
-        self.speed2_x = 0
+      elif self.speed2_x == -1:
+        self.speed2_x = 1
       #End If
-      if pacman.rect.y > self.rect.y:
-        self.speed2_y = 1
-      elif pacman.rect.y < self.rect.y:
+      if self.speed2_y == 1:
         self.speed2_y = -1
-      elif pacman.rect.y == self.rect.y:
-        self.speed2_y = 0
+      elif self.speed2_y == -1:
+        self.speed2_y = 1
       #End If
-      if self.speed2_x == 1 and self.speed2_y == 1:
-        self.speed2_y = 0
+
+    #for foo in enemy_background_hit_list:
+      #if pacman.rect.x > self.rect.x:
+        #self.speed2_x = 1
+      #elif pacman.rect.x < self.rect.x:
+        #self.speed2_x = -1
+      #elif pacman.rect.x == self.rect.x:
+        #self.speed2_x = 0
       #End If
-      if self.speed2_x == 1 and self.speed2_y == -1:
-        self.speed2_y = 0
+      #if pacman.rect.y > self.rect.y:
+        #self.speed2_y = 1
+      #elif pacman.rect.y < self.rect.y:
+        #self.speed2_y = -1
+      #elif pacman.rect.y == self.rect.y:
+        #self.speed2_y = 0
       #End If
-      if self.speed2_x == -1 and self.speed2_y == 1:
-        self.speed2_x = 0
+      #if self.speed2_x == 1 and self.speed2_y == 1:
+        #self.speed2_y = 0
       #End If
-      if self.speed2_x == -1 and self.speed2_y == -1:
-        self.speed2_x = 0
+      #if self.speed2_x == 1 and self.speed2_y == -1:
+        #self.speed2_y = 0
+      #End If
+      #if self.speed2_x == -1 and self.speed2_y == 1:
+        #self.speed2_x = 0
+      #End If
+      #if self.speed2_x == -1 and self.speed2_y == -1:
+        #self.speed2_x = 0
       #End If
     #Next
     self.old_x = self.rect.x
@@ -137,6 +165,7 @@ done = False
 all_sprites_list = pygame.sprite.Group()
 # Create a list of tiles for the walls
 wall_list = pygame.sprite.Group()
+background_list = pygame.sprite.Group()
 player_list = pygame.sprite.Group()
 enemy_list = pygame.sprite.Group()
 # Create walls on the screen (each tile is 20 x 20 so alter cords)
@@ -146,6 +175,15 @@ for y in range(10):
             my_wall = tile(BLUE, 20, 20, x*20, y *20)
             wall_list.add(my_wall)
             all_sprites_list.add(my_wall)
+        #End If
+    #Next
+#Next
+for y in range(10):
+    for x in range (10):
+        if map[x][y] == 0:
+            my_background = background(BLACK, 20, 20, x*20, y *20)
+            background_list.add(my_background)
+            all_sprites_list.add(my_background)
         #End If
     #Next
 #Next
@@ -189,6 +227,7 @@ while not done:
   pacman_old_x = pacman.rect.x
   pacman_old_y = pacman.rect.y
   enemy_hit_list = pygame.sprite.groupcollide(enemy_list, wall_list, dokilla=False, dokillb=False, collided=None)
+  enemy_background_hit_list = pygame.sprite.groupcollide(enemy_list, background_list, dokilla=False, dokillb=False, collided=None)
   # -- Game logic goes after this comment
   all_sprites_list.update()
   # -- Screen background is BLACK
