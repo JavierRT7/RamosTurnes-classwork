@@ -39,6 +39,9 @@ class Invader(pygame.sprite.Sprite):
       self.rect.y = 0
     #End If
   #End Procedure
+  def delete(self):
+    self.color = BLACK
+  #End Procedure
 class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height, bullet_count):
@@ -62,6 +65,9 @@ class Player(pygame.sprite.Sprite):
   def update(self):
     self.rect.x = self.rect.x + self.speed
 #End Class
+  def delete(self):
+    self.color = BLACK
+  #End Procedure
 class Bullet(pygame.sprite.Sprite):
   # Define the constructor for snow
   def __init__(self, color, width, height, speed):
@@ -80,8 +86,11 @@ class Bullet(pygame.sprite.Sprite):
 # Class update function - runs for each pass through the game loop
   def update(self):
     self.rect.y = self.rect.y - self.speed
-#End Class
-  #End Procedure   
+  #End Procedure
+  def delete(self):
+    self.color = BLACK
+  #End Procedure
+#End Class 
 # -- Exit game flag set to false
 done = False
 lives = 5
@@ -89,6 +98,7 @@ Lives = "Lives: 5"
 score = 0
 Score = "Score: 0"
 Bullets = "Bullets: 50"
+finished = False
 # Create a list of the snow blocks
 invader_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
@@ -141,7 +151,16 @@ while not done:
     lives = lives - 1
     Lives = "Lives: " + str(lives)
   #Next Event
+  if lives > 1:
+    finished = True
+  #End If
+  if score > ((number_of_invaders - 1) * 5):
+    finished = True
+  #End If
   all_sprites_group.update()
+  if finished == True:
+    all_sprites_group.delete()
+  #End If
   # -- Screen background is BLACK
   screen.fill (BLACK)
   # -- Draw here
