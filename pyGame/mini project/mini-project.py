@@ -9,17 +9,21 @@ RED = (255,0,0)
 # -- Initialise PyGame
 pygame.init()
 # -- Blank Screen
-size = (1000,720)
+size = (1200,720)
 screen = pygame.display.set_mode(size)
 # -- Title of new window/screen
 pygame.display.set_caption("My Window")
 #Classes
 class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
-  def __init__(self, color, width, height):
+  def __init__(self, color, width, height, health, money, keys, score):
     # Set speed of the sprite
     self.speed_x = 0
     self.speed_y = 0
+    self.health = 100
+    self.money = 0
+    self.keys = 0
+    self.score = 0
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
@@ -27,8 +31,8 @@ class Player(pygame.sprite.Sprite):
     self.image.fill(color)
     # Set the position of the sprite
     self.rect = self.image.get_rect()
-    self.rect.x = 20
-    self.rect.y = 20
+    self.rect.x = 490
+    self.rect.y = 350
   #End Procedure
 
 # Class update function - runs for each pass through the game loop
@@ -65,38 +69,80 @@ class Wall(pygame.sprite.Sprite):
         self.rect.y = y_ref
     #End Procedure
 #End Class
+class Display(pygame.sprite.Sprite):
+    # Define the constructor for invader
+    def __init__(self, color, width, height, x_ref, y_ref):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.Surface([width,height])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        # Set the position of the player attributes
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+    #End Procedure
+#End Class
 # -- Exit game flag set to false
-map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,1,0,0,1,1,1,1,1,1,1,0,1,1,0,1],
+[1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,1],
+[1,0,1,1,1,1,1,1,1,0,0,0,1,0,0,1,1,1],
+[1,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,1],
+[1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1],
+[1,0,1,1,1,0,0,0,1,0,0,1,1,1,1,0,0,1],
+[1,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1],
+[1,0,0,1,1,1,0,0,1,1,1,1,1,0,0,0,1,1],
+[1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1],
+[1,0,0,1,1,1,0,0,0,0,1,0,1,1,1,1,0,1],
+[1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1],
+[1,0,0,1,0,0,0,0,0,0,0,0,1,0,1,1,0,1],
+[1,0,0,1,0,1,1,1,0,1,1,1,1,1,1,0,0,1],
+[1,0,0,1,0,1,0,0,0,0,0,0,0,0,1,1,0,1],
+[1,0,1,1,1,1,0,0,1,1,1,0,0,0,0,1,0,1],
+[1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,1],
+[1,0,0,0,0,0,1,1,0,0,1,0,0,1,1,1,0,1],
+[1,0,0,1,1,1,1,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]]
+screen_colour = WHITE
 done = False
 all_sprites_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 wall_group = pygame.sprite.Group()
-player = Player(BLUE, 20, 20)
+display_group = pygame.sprite.Group()
+player = Player(BLUE, 20, 20, 100, 0, 0, 0)
 player_group.add(player)
 all_sprites_group.add(player)
 for y in range(18):
-    for x in range(18):
+    for x in range(25):
         if map[x][y] == 1:
             my_wall = Wall(RED, 40, 40, x*40, y *40)
             wall_group.add(my_wall)
             all_sprites_group.add(my_wall)
+        #End If
+    #Next
+#Next
+for y in range(18):
+    for x in range(35):
+        if map[x][y] == 2:
+            my_display = Display(BLACK, 40, 40, x*40, y *40)
+            display_group.add(my_display)
+            all_sprites_group.add(my_display)
         #End If
     #Next
 #Next
@@ -110,12 +156,37 @@ while not done:
       done = True
     #End If
   #Next event
+  player_hit_list = pygame.sprite.spritecollide(player, wall_group, False)
+  for foo in player_hit_list:
+    player.speed_x = 0
+    player.speed_y = 0
+    player.rect.x = player_old_x
+    player.rect.y = player_old_y
+  #Next
+  player_old_x = player.rect.x
+  player_old_y = player.rect.y
+  Health = 'Health: ' + str(player.health)
+  Money = 'Money: ' + str(player.money)
+  Keys = 'Keys: ' + str(player.keys)
+  Score = 'Score: ' + str(player.score)
   # -- Game logic goes after this comment
   all_sprites_group.update()
   # -- Screen background is BLACK
-  screen.fill (BLACK)
+  screen.fill (screen_colour)
   # -- Draw here
   all_sprites_group.draw (screen)
+  font = pygame.font.SysFont('Calibri', 25, True, False)
+  text = font.render(Health, True, WHITE)
+  screen.blit(text, [1005, 10])
+  font = pygame.font.SysFont('Calibri', 25, True, False)
+  text = font.render(Money, True, WHITE)
+  screen.blit(text, [1005, 40])
+  font = pygame.font.SysFont('Calibri', 25, True, False)
+  text = font.render(Keys, True, WHITE)
+  screen.blit(text, [1005, 70])
+  font = pygame.font.SysFont('Calibri', 25, True, False)
+  text = font.render(Score, True, WHITE)
+  screen.blit(text, [1005, 100])
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
