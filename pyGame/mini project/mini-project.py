@@ -1,4 +1,5 @@
 import pygame
+import random
 # -- Global Constants
 # -- Colours
 BLACK = (0,0,0)
@@ -6,6 +7,7 @@ WHITE = (255,255,255)
 BLUE = (50,50,255)
 YELLOW = (255,255,0)
 RED = (255,0,0)
+ORANGE = (255,150,0)
 # -- Initialise PyGame
 pygame.init()
 # -- Blank Screen
@@ -39,19 +41,19 @@ class Player(pygame.sprite.Sprite):
   def update(self):
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP]:
-      self.speed_y = -2
+      self.speed_y = -3
       self.rect.y = self.rect.y + self.speed_y
     #End If
     if keys[pygame.K_DOWN]:
-      self.speed_y = 2
+      self.speed_y = 3
       self.rect.y = self.rect.y + self.speed_y
     #End If
     if keys[pygame.K_RIGHT]:
-      self.speed_x = 2
+      self.speed_x = 3
       self.rect.x = self.rect.x + self.speed_x
     #End If
     if keys[pygame.K_LEFT]:
-      self.speed_x = -2
+      self.speed_x = -3
       self.rect.x = self.rect.x + self.speed_x
     #End If
 #End Class
@@ -82,6 +84,30 @@ class Display(pygame.sprite.Sprite):
         self.rect.x = x_ref
         self.rect.y = y_ref
     #End Procedure
+#End Class
+class Enemy(pygame.sprite.Sprite):
+  # Define the constructor for snow
+  def __init__(self, color, width, height, speed_x, speed_y):
+    # Set speed of the sprite
+    self.speed_x = speed_x
+    self.speed_y = speed_y
+    # Call the sprite constructor
+    super().__init__()
+    # Create a sprite and fill it with colour
+    self.image = pygame.Surface([width,height])
+    self.image.fill(color)
+    # Set the position of the sprite
+    self.rect = self.image.get_rect()
+    self.old_x = self.rect.x
+    self.old_y = self.rect.y
+  #End Procedure
+  def update(self):
+    self.rect.x = self.rect.x + self.speed_x
+    self.rect.y = self.rect.y + self.speed_y
+    for foo in enemy_hit_list:
+      self.speed_x = 0
+      self.speed_y = 0
+  #Next
 #End Class
 # -- Exit game flag set to false
 map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -125,6 +151,7 @@ all_sprites_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 wall_group = pygame.sprite.Group()
 display_group = pygame.sprite.Group()
+enemy_group = pygame.sprite.Group()
 player = Player(BLUE, 20, 20, 100, 0, 0, 0)
 player_group.add(player)
 all_sprites_group.add(player)
@@ -146,6 +173,25 @@ for y in range(18):
         #End If
     #Next
 #Next
+for counter in range(3):
+    if counter == 0:
+        enemy = Enemy(ORANGE, 20, 20, -2, 0)
+        enemy.rect.x = 940
+        enemy.rect.y = 40
+    #End If
+    if counter == 1:
+        enemy = Enemy(ORANGE, 20, 20, 0, -2)
+        enemy.rect.x = 940
+        enemy.rect.y = 660
+    #End If
+    if counter == 2:
+        enemy = Enemy(ORANGE, 20, 20, 2, 0)
+        enemy.rect.x = 40
+        enemy.rect.y = 660
+    #End If
+    enemy_group.add(enemy)
+    all_sprites_group.add(enemy)
+#Next
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 ### -- Game Loop
@@ -165,6 +211,9 @@ while not done:
   #Next
   player_old_x = player.rect.x
   player_old_y = player.rect.y
+  enemy_hit_list = pygame.sprite.spritecollide(enemy, wall_group, False)
+  enemy.old_x = enemy.rect.x
+  enemy.old_y = enemy.rect.x
   Health = 'Health: ' + str(player.health)
   Money = 'Money: ' + str(player.money)
   Keys = 'Keys: ' + str(player.keys)
