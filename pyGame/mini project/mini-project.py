@@ -104,6 +104,12 @@ class Enemy(pygame.sprite.Sprite):
   def update(self):
     self.rect.x = self.rect.x + self.speed_x
     self.rect.y = self.rect.y + self.speed_y
+    ### SRC - You are using a Global variable here (enemy_hit_list) and that
+    ### is best avoided. Think about how you could do that.
+    ### The update method is being called for all your enemies
+    ### as soon as there are walls in the enemy hit list all
+    ### your enemies will have their speed set to 0 and stop
+    ### do you reset their motion anywhere else?
     for foo in enemy_hit_list:
       self.speed_x = 0
       self.speed_y = 0
