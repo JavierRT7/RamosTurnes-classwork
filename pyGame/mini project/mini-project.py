@@ -111,6 +111,9 @@ class Enemy(pygame.sprite.Sprite):
     for foo in enemy_hit_list:
       self.speed_x = random.randint(-3, 3)
       self.speed_y = random.randint(-3, 3)
+      if self.speed_x == 0 and self.speed_y == 0:
+        self.speed_x = random.randint(-3, 3)
+        self.speed_y = random.randint(-3, 3)
       self.rect.x = self.old_x
       self.rect.y = self.old_y
     #Next
@@ -188,24 +191,12 @@ for y in range(18):
         #End If
     #Next
 #Next
-for counter in range(3):
-    if counter == 0:
-        enemy = Enemy(ORANGE, 20, 20, -2, 0, wall_group)
-        enemy.rect.x = 940
-        enemy.rect.y = 40
-    #End If
-    if counter == 1:
-        enemy = Enemy(ORANGE, 20, 20, 0, -2, wall_group)
-        enemy.rect.x = 940
-        enemy.rect.y = 660
-    #End If
-    if counter == 2:
-        enemy = Enemy(ORANGE, 20, 20, 2, 0, wall_group)
-        enemy.rect.x = 40
-        enemy.rect.y = 660
-    #End If
-    enemy_group.add(enemy)
-    all_sprites_group.add(enemy)
+for counter in range(40):
+  enemy = Enemy(ORANGE, 20, 20, -2, 0, wall_group)
+  enemy.rect.x = random.randint(40, 940)
+  enemy.rect.y = random.randint(4, 660)
+  enemy_group.add(enemy)
+  all_sprites_group.add(enemy)
 #Next
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
