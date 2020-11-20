@@ -181,18 +181,18 @@ for y in range(18):
 for counter in range(3):
     if counter == 0:
         enemy = Enemy(ORANGE, 20, 20, -2, 0)
-        enemy.rect.x = 930
-        enemy.rect.y = 50
+        enemy.rect.x = 940
+        enemy.rect.y = 40
     #End If
     if counter == 1:
         enemy = Enemy(ORANGE, 20, 20, 0, -2)
-        enemy.rect.x = 930
-        enemy.rect.y = 650
+        enemy.rect.x = 940
+        enemy.rect.y = 660
     #End If
     if counter == 2:
         enemy = Enemy(ORANGE, 20, 20, 2, 0)
-        enemy.rect.x = 50
-        enemy.rect.y = 650
+        enemy.rect.x = 40
+        enemy.rect.y = 660
     #End If
     enemy_group.add(enemy)
     all_sprites_group.add(enemy)
