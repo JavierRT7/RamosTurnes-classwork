@@ -91,6 +91,7 @@ class Enemy(pygame.sprite.Sprite):
     # Set speed of the sprite
     self.speed_x = speed_x
     self.speed_y = speed_y
+    
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
@@ -100,6 +101,7 @@ class Enemy(pygame.sprite.Sprite):
     self.rect = self.image.get_rect()
     self.old_x = self.rect.x
     self.old_y = self.rect.y
+    self.enemy_hit_list = pygame.sprite.spritecollide(self, wall_group, False)
   #End Procedure
   def update(self):
     self.rect.x = self.rect.x + self.speed_x
@@ -110,10 +112,7 @@ class Enemy(pygame.sprite.Sprite):
     ### as soon as there are walls in the enemy hit list all
     ### your enemies will have their speed set to 0 and stop
     ### do you reset their motion anywhere else?
-    for foo in enemy_hit_list:
-      self.speed_x = 0
-      self.speed_y = 0
-  #Next
+  #End Procedure
 #End Class
 # -- Exit game flag set to false
 map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -182,18 +181,18 @@ for y in range(18):
 for counter in range(3):
     if counter == 0:
         enemy = Enemy(ORANGE, 20, 20, -2, 0)
-        enemy.rect.x = 940
-        enemy.rect.y = 40
+        enemy.rect.x = 930
+        enemy.rect.y = 50
     #End If
     if counter == 1:
         enemy = Enemy(ORANGE, 20, 20, 0, -2)
-        enemy.rect.x = 940
-        enemy.rect.y = 660
+        enemy.rect.x = 930
+        enemy.rect.y = 650
     #End If
     if counter == 2:
         enemy = Enemy(ORANGE, 20, 20, 2, 0)
-        enemy.rect.x = 40
-        enemy.rect.y = 660
+        enemy.rect.x = 50
+        enemy.rect.y = 650
     #End If
     enemy_group.add(enemy)
     all_sprites_group.add(enemy)
@@ -217,7 +216,10 @@ while not done:
   #Next
   player_old_x = player.rect.x
   player_old_y = player.rect.y
-  enemy_hit_list = pygame.sprite.spritecollide(enemy, wall_group, False)
+  for foo in enemy.enemy_hit_list:
+    enemy.speed_x = 0
+    enemy.speed_y = 0
+  #Next
   enemy.old_x = enemy.rect.x
   enemy.old_y = enemy.rect.x
   Health = 'Health: ' + str(player.health)
