@@ -119,12 +119,6 @@ class Enemy(pygame.sprite.Sprite):
     #Next
     self.old_x = self.rect.x
     self.old_y = self.rect.y
-    ### SRC - You are using a Global variable here (enemy_hit_list) and that
-    ### is best avoided. Think about how you could do that.
-    ### The update method is being called for all your enemies
-    ### as soon as there are walls in the enemy hit list all
-    ### your enemies will have their speed set to 0 and stop
-    ### do you reset their motion anywhere else?
   #End Procedure
 #End Class
 # -- Exit game flag set to false
@@ -193,8 +187,8 @@ for y in range(18):
 #Next
 for counter in range(40):
   enemy = Enemy(ORANGE, 20, 20, -2, 0, wall_group)
-  enemy.rect.x = random.randint(40, 940)
-  enemy.rect.y = random.randint(4, 660)
+  enemy.rect.x = 490
+  enemy.rect.y = 350
   enemy_group.add(enemy)
   all_sprites_group.add(enemy)
 #Next
