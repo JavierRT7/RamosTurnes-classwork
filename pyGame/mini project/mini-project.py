@@ -106,6 +106,14 @@ class Enemy(pygame.sprite.Sprite):
   def update(self):
     self.rect.x = self.rect.x + self.speed_x
     self.rect.y = self.rect.y + self.speed_y
+    for foo in self.enemy_hit_list:
+      self.speed_x = 0
+      self.speed_y = 0
+      print(self.speed_x)
+      print(self.rect.x)
+    #Next
+    self.old_x = self.rect.x
+    self.old_y = self.rect.x
     ### SRC - You are using a Global variable here (enemy_hit_list) and that
     ### is best avoided. Think about how you could do that.
     ### The update method is being called for all your enemies
@@ -181,18 +189,20 @@ for y in range(18):
 for counter in range(3):
     if counter == 0:
         enemy = Enemy(ORANGE, 20, 20, -2, 0)
-        enemy.rect.x = 940
-        enemy.rect.y = 40
+        enemy.rect.x = 930
+        enemy.rect.y = 50
+        print(enemy.speed_x)
+        print(enemy.rect.x)
     #End If
     if counter == 1:
         enemy = Enemy(ORANGE, 20, 20, 0, -2)
-        enemy.rect.x = 940
-        enemy.rect.y = 660
+        enemy.rect.x = 930
+        enemy.rect.y = 650
     #End If
     if counter == 2:
         enemy = Enemy(ORANGE, 20, 20, 2, 0)
-        enemy.rect.x = 40
-        enemy.rect.y = 660
+        enemy.rect.x = 50
+        enemy.rect.y = 650
     #End If
     enemy_group.add(enemy)
     all_sprites_group.add(enemy)
@@ -216,12 +226,6 @@ while not done:
   #Next
   player_old_x = player.rect.x
   player_old_y = player.rect.y
-  for foo in enemy.enemy_hit_list:
-    enemy.speed_x = 0
-    enemy.speed_y = 0
-  #Next
-  enemy.old_x = enemy.rect.x
-  enemy.old_y = enemy.rect.x
   Health = 'Health: ' + str(player.health)
   Money = 'Money: ' + str(player.money)
   Keys = 'Keys: ' + str(player.keys)
