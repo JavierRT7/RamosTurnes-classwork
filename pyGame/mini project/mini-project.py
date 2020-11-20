@@ -8,6 +8,7 @@ BLUE = (50,50,255)
 YELLOW = (255,255,0)
 RED = (255,0,0)
 ORANGE = (255,150,0)
+GREEN = (0,255,0)
 # -- Initialise PyGame
 pygame.init()
 # -- Blank Screen
@@ -18,7 +19,7 @@ pygame.display.set_caption("My Window")
 #Classes
 class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
-  def __init__(self, color, width, height, health, money, keys, score):
+  def __init__(self, color, width, height, health, money, keys, score, bullets):
     # Set speed of the sprite
     self.speed_x = 0
     self.speed_y = 0
@@ -26,6 +27,7 @@ class Player(pygame.sprite.Sprite):
     self.money = 0
     self.keys = 0
     self.score = 0
+    self.bullets = bullets
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
@@ -34,7 +36,7 @@ class Player(pygame.sprite.Sprite):
     # Set the position of the sprite
     self.rect = self.image.get_rect()
     self.rect.x = 490
-    self.rect.y = 350
+    self.rect.y = 40
   #End Procedure
 
 # Class update function - runs for each pass through the game loop
@@ -55,6 +57,38 @@ class Player(pygame.sprite.Sprite):
     if keys[pygame.K_LEFT]:
       self.speed_x = -3
       self.rect.x = self.rect.x + self.speed_x
+    #End If
+    if keys[pygame.K_w]:
+      if self.bullets > 0:
+        bullet = Bullet(RED, 5, 5, 0, -5)
+        bullet_group.add(bullet)
+        all_sprites_group.add(bullet)
+        self.bullets = self.bullets - 1
+      #End If
+    #End If
+    if keys[pygame.K_s]:
+      if self.bullets > 0:
+        bullet = Bullet(RED, 5, 5, 0, 5)
+        bullet_group.add(bullet)
+        all_sprites_group.add(bullet)
+        self.bullets = self.bullets - 1
+      #End If
+    #End If
+    if keys[pygame.K_a]:
+      if self.bullets > 0:
+        bullet = Bullet(RED, 5, 5, -5, 0)
+        bullet_group.add(bullet)
+        all_sprites_group.add(bullet)
+        self.bullets = self.bullets - 1
+      #End If
+    #End If
+    if keys[pygame.K_d]:
+      if self.bullets > 0:
+        bullet = Bullet(RED, 5, 5, 5, 0)
+        bullet_group.add(bullet)
+        all_sprites_group.add(bullet)
+        self.bullets = self.bullets - 1
+      #End If
     #End If
 #End Class
 class Wall(pygame.sprite.Sprite):
@@ -91,7 +125,6 @@ class Enemy(pygame.sprite.Sprite):
     # Set speed of the sprite
     self.speed_x = speed_x
     self.speed_y = speed_y
-    
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
@@ -119,6 +152,28 @@ class Enemy(pygame.sprite.Sprite):
     #Next
     self.old_x = self.rect.x
     self.old_y = self.rect.y
+  #End Procedure
+#End Class
+class Bullet(pygame.sprite.Sprite):
+  # Define the constructor for snow
+  def __init__(self, color, width, height, speed_x, speed_y):
+    # Set speed of the sprite
+    self.speed_x = speed_x
+    self.speed_y = speed_y
+    # Call the sprite constructor
+    super().__init__()
+    # Create a sprite and fill it with colour
+    self.image = pygame.Surface([width,height])
+    self.image.fill(color)
+    # Set the position of the sprite
+    self.rect = self.image.get_rect()
+    self.rect.x = player.rect.x + 5
+    self.rect.y = player.rect.y + 5
+  #End Procedure
+# Class update function - runs for each pass through the game loop
+  def update(self):
+    self.rect.x = self.rect.x + self.speed_x
+    self.rect.y = self.rect.y + self.speed_y
   #End Procedure
 #End Class
 # -- Exit game flag set to false
@@ -164,7 +219,9 @@ player_group = pygame.sprite.Group()
 wall_group = pygame.sprite.Group()
 display_group = pygame.sprite.Group()
 enemy_group = pygame.sprite.Group()
-player = Player(BLUE, 20, 20, 100, 0, 0, 0)
+bullet_group = pygame.sprite.Group()
+enemy_number = 30
+player = Player(BLUE, 20, 20, 100, 0, 0, 0, 1000)
 player_group.add(player)
 all_sprites_group.add(player)
 for y in range(18):
@@ -185,7 +242,7 @@ for y in range(18):
         #End If
     #Next
 #Next
-for counter in range(40):
+for counter in range(enemy_number + 1):
   enemy = Enemy(ORANGE, 20, 20, -2, 0, wall_group)
   enemy.rect.x = 490
   enemy.rect.y = 350
@@ -215,7 +272,14 @@ while not done:
   Money = 'Money: ' + str(player.money)
   Keys = 'Keys: ' + str(player.keys)
   Score = 'Score: ' + str(player.score)
+  Bullets = 'Bullets: ' + str(player.bullets)
   # -- Game logic goes after this comment
+  bullet_hit_group = pygame.sprite.groupcollide(bullet_group, wall_group, dokilla=True, dokillb=False, collided=None)
+  bullet_enemy_hit_group = pygame.sprite.groupcollide(bullet_group, enemy_group, dokilla=False, dokillb=True, collided=None)
+  for foo in bullet_enemy_hit_group:
+    enemy_number = enemy_number - 1
+  #Next
+  enemyNumber = 'Enemies: ' + str(enemy_number)
   all_sprites_group.update()
   # -- Screen background is BLACK
   screen.fill (screen_colour)
@@ -233,6 +297,12 @@ while not done:
   font = pygame.font.SysFont('Calibri', 25, True, False)
   text = font.render(Score, True, WHITE)
   screen.blit(text, [1005, 100])
+  font = pygame.font.SysFont('Calibri', 25, True, False)
+  text = font.render(Bullets, True, WHITE)
+  screen.blit(text, [1005, 130])
+  font = pygame.font.SysFont('Calibri', 25, True, False)
+  text = font.render(enemyNumber, True, WHITE)
+  screen.blit(text, [1005, 160])
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
