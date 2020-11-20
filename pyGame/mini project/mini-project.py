@@ -87,7 +87,7 @@ class Display(pygame.sprite.Sprite):
 #End Class
 class Enemy(pygame.sprite.Sprite):
   # Define the constructor for snow
-  def __init__(self, color, width, height, speed_x, speed_y):
+  def __init__(self, color, width, height, speed_x, speed_y, wall_grp):
     # Set speed of the sprite
     self.speed_x = speed_x
     self.speed_y = speed_y
@@ -101,12 +101,14 @@ class Enemy(pygame.sprite.Sprite):
     self.rect = self.image.get_rect()
     self.old_x = self.rect.x
     self.old_y = self.rect.y
-    self.enemy_hit_list = pygame.sprite.spritecollide(self, wall_group, False)
+    self.wall_grp = wall_grp
+    #self.enemy_hit_list = []pygame.sprite.spritecollide(self, wall_group, False)
   #End Procedure
   def update(self):
     self.rect.x = self.rect.x + self.speed_x
     self.rect.y = self.rect.y + self.speed_y
-    for foo in self.enemy_hit_list:
+    # enemy_hit_list = spritecollide(self, self.wall_grp,
+    for foo in enemy_hit_list:
       self.speed_x = 0
       self.speed_y = 0
       print(self.speed_x)
