@@ -87,7 +87,7 @@ class Display(pygame.sprite.Sprite):
 #End Class
 class Enemy(pygame.sprite.Sprite):
   # Define the constructor for snow
-  def __init__(self, color, width, height, speed_x, speed_y, wall_grp):
+  def __init__(self, color, width, height, speed_x, speed_y, wall_group):
     # Set speed of the sprite
     self.speed_x = speed_x
     self.speed_y = speed_y
@@ -101,21 +101,21 @@ class Enemy(pygame.sprite.Sprite):
     self.rect = self.image.get_rect()
     self.old_x = self.rect.x
     self.old_y = self.rect.y
-    self.wall_grp = wall_grp
+    self.wall_group = wall_group
     #self.enemy_hit_list = []pygame.sprite.spritecollide(self, wall_group, False)
   #End Procedure
   def update(self):
     self.rect.x = self.rect.x + self.speed_x
     self.rect.y = self.rect.y + self.speed_y
-    # enemy_hit_list = spritecollide(self, self.wall_grp,
+    enemy_hit_list = pygame.sprite.spritecollide(self, self.wall_group, False)
     for foo in enemy_hit_list:
-      self.speed_x = 0
-      self.speed_y = 0
-      print(self.speed_x)
-      print(self.rect.x)
+      self.speed_x = random.randint(-3, 3)
+      self.speed_y = random.randint(-3, 3)
+      self.rect.x = self.old_x
+      self.rect.y = self.old_y
     #Next
     self.old_x = self.rect.x
-    self.old_y = self.rect.x
+    self.old_y = self.rect.y
     ### SRC - You are using a Global variable here (enemy_hit_list) and that
     ### is best avoided. Think about how you could do that.
     ### The update method is being called for all your enemies
@@ -190,21 +190,19 @@ for y in range(18):
 #Next
 for counter in range(3):
     if counter == 0:
-        enemy = Enemy(ORANGE, 20, 20, -2, 0)
-        enemy.rect.x = 930
-        enemy.rect.y = 50
-        print(enemy.speed_x)
-        print(enemy.rect.x)
+        enemy = Enemy(ORANGE, 20, 20, -2, 0, wall_group)
+        enemy.rect.x = 940
+        enemy.rect.y = 40
     #End If
     if counter == 1:
-        enemy = Enemy(ORANGE, 20, 20, 0, -2)
-        enemy.rect.x = 930
-        enemy.rect.y = 650
+        enemy = Enemy(ORANGE, 20, 20, 0, -2, wall_group)
+        enemy.rect.x = 940
+        enemy.rect.y = 660
     #End If
     if counter == 2:
-        enemy = Enemy(ORANGE, 20, 20, 2, 0)
-        enemy.rect.x = 50
-        enemy.rect.y = 650
+        enemy = Enemy(ORANGE, 20, 20, 2, 0, wall_group)
+        enemy.rect.x = 40
+        enemy.rect.y = 660
     #End If
     enemy_group.add(enemy)
     all_sprites_group.add(enemy)
@@ -221,10 +219,10 @@ while not done:
   #Next event
   player_hit_list = pygame.sprite.spritecollide(player, wall_group, False)
   for foo in player_hit_list:
-    player.speed_x = 0
-    player.speed_y = 0
     player.rect.x = player_old_x
     player.rect.y = player_old_y
+    player.speed_x = 0
+    player.speed_y = 0
   #Next
   player_old_x = player.rect.x
   player_old_y = player.rect.y
