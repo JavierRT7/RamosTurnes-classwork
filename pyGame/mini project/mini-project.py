@@ -61,6 +61,8 @@ class Player(pygame.sprite.Sprite):
     if keys[pygame.K_w]:
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, 0, -5)
+        bullet.rect.x = player.rect.x + 10
+        bullet.rect.y = player.rect.y + 10
         bullet_group.add(bullet)
         all_sprites_group.add(bullet)
         self.bullets = self.bullets - 1
@@ -69,6 +71,8 @@ class Player(pygame.sprite.Sprite):
     if keys[pygame.K_s]:
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, 0, 5)
+        bullet.rect.x = player.rect.x + 10
+        bullet.rect.y = player.rect.y + 10
         bullet_group.add(bullet)
         all_sprites_group.add(bullet)
         self.bullets = self.bullets - 1
@@ -77,6 +81,8 @@ class Player(pygame.sprite.Sprite):
     if keys[pygame.K_a]:
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, -5, 0)
+        bullet.rect.x = player.rect.x + 10
+        bullet.rect.y = player.rect.y + 10
         bullet_group.add(bullet)
         all_sprites_group.add(bullet)
         self.bullets = self.bullets - 1
@@ -85,6 +91,8 @@ class Player(pygame.sprite.Sprite):
     if keys[pygame.K_d]:
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, 5, 0)
+        bullet.rect.x = player.rect.x + 10
+        bullet.rect.y = player.rect.y + 10
         bullet_group.add(bullet)
         all_sprites_group.add(bullet)
         self.bullets = self.bullets - 1
@@ -190,25 +198,33 @@ class Boss(pygame.sprite.Sprite):
     self.old_y = self.rect.y
     if self.bullets > 0:
       if player.rect.x == boss.rect.x and player.rect.y > boss.rect.y:
-        boss_bullet = Bullet(BLACK, 5, 5, 0, 5)
+        boss_bullet = Bullet(RED, 5, 5, 0, 5)
+        boss_bullet.rect.x = boss.rect.x + 15
+        boss_bullet.rect.y = boss.rect.y + 15
         boss_bullet_group.add(boss_bullet)
         all_sprites_group.add(boss_bullet)
         boss.bullets = boss.bullets - 1
       #End If
       if player.rect.x == boss.rect.x and player.rect.y < boss.rect.y:
-        boss_bullet = Bullet(BLACK, 5, 5, 0, -5)
+        boss_bullet = Bullet(RED, 5, 5, 0, -5)
+        boss_bullet.rect.x = boss.rect.x + 15
+        boss_bullet.rect.y = boss.rect.y + 15
         boss_bullet_group.add(boss_bullet)
         all_sprites_group.add(boss_bullet)
         boss.bullets = boss.bullets - 1
       #End If
       if player.rect.y == boss.rect.y and player.rect.x > boss.rect.x:
-        boss_bullet = Bullet(BLACK, 5, 5, 0, 5)
+        boss_bullet = Bullet(RED, 5, 5, 5, 0)
+        boss_bullet.rect.x = boss.rect.x + 15
+        boss_bullet.rect.y = boss.rect.y + 15
         boss_bullet_group.add(boss_bullet)
         all_sprites_group.add(boss_bullet)
         boss.bullets = boss.bullets - 1
       #End If
       if player.rect.y == boss.rect.y and player.rect.x < boss.rect.x:
-        boss_bullet = Bullet(BLACK, 5, 5, 0, -5)
+        boss_bullet = Bullet(RED, 5, 5, -5, 0)
+        boss_bullet.rect.x = boss.rect.x + 15
+        boss_bullet.rect.y = boss.rect.y + 15
         boss_bullet_group.add(boss_bullet)
         all_sprites_group.add(boss_bullet)
         boss.bullets = boss.bullets - 1
@@ -229,8 +245,6 @@ class Bullet(pygame.sprite.Sprite):
     self.image.fill(color)
     # Set the position of the sprite
     self.rect = self.image.get_rect()
-    self.rect.x = player.rect.x + 5
-    self.rect.y = player.rect.y + 5
   #End Procedure
 # Class update function - runs for each pass through the game loop
   def update(self):
@@ -337,7 +351,23 @@ while not done:
   bullet_enemy_hit_group = pygame.sprite.groupcollide(bullet_group, enemy_group, dokilla=False, dokillb=True, collided=None)
   enemy_player_hit_group = pygame.sprite.groupcollide(player_group, enemy_group, dokilla=False, dokillb=True, collided=None)
   player_boss_hit_group = pygame.sprite.groupcollide(player_group, boss_group, dokilla=True, dokillb=False, collided=None)
-  boss_bullet_hit_group = pygame.sprite.groupcollide(bullet_group, wall_group, dokilla=True, dokillb=False, collided=None)
+  boss_bullet_hit_group = pygame.sprite.groupcollide(boss_bullet_group, wall_group, dokilla=True, dokillb=False, collided=None)
+  if enemy_number < 1:
+    if boss.health > 0:
+      bullet_boss_hit_group = pygame.sprite.groupcollide(bullet_group, boss_group, dokilla=True, dokillb=False, collided=None)
+      for foo in bullet_boss_hit_group:
+        boss.health = boss.health - 1
+      #Next
+    #End If
+  #End If
+  if player.health > 0:
+    boss_bullet_player_hit_group = pygame.sprite.groupcollide(boss_bullet_group, player_group, dokilla=True, dokillb=False, collided=None)
+    for foo in boss_bullet_player_hit_group:
+      if player.health > 0:
+        player.health = player.health - 5
+      #End If
+    #Next
+  #End If
   for foo in bullet_enemy_hit_group:
     enemy_number = enemy_number - 1
     if enemy_number == 0:
@@ -359,12 +389,24 @@ while not done:
       all_sprites_group.add(boss)
     #End If
   #Next
+  if enemy_number < 1:
+    if boss.health == 0:
+      boss_kill_group = pygame.sprite.groupcollide(bullet_group, boss_group, dokilla=True, dokillb=True, collided=None)
+    #End If
+  #End If
+  if player.health == 0:
+    player_kill_group = pygame.sprite.groupcollide(boss_bullet_group, player_group, dokilla=True, dokillb=True, collided=None)
+  #End If
   enemyNumber = 'Enemies: ' + str(enemy_number)
   Health = 'Health: ' + str(player.health)
   Money = 'Money: ' + str(player.money)
   Keys = 'Keys: ' + str(player.keys)
   Score = 'Score: ' + str(player.score)
   Bullets = 'Bullets: ' + str(player.bullets)
+  if enemy_number < 1:
+    bossHealth = 'Boss Health: ' + str(boss.health)
+    bossBullets = 'Boss Bullets: ' + str(boss.bullets)
+  #End If
   all_sprites_group.update()
   # -- Screen background is BLACK
   screen.fill (screen_colour)
@@ -388,6 +430,14 @@ while not done:
   font = pygame.font.SysFont('Calibri', 25, True, False)
   text = font.render(enemyNumber, True, WHITE)
   screen.blit(text, [1005, 160])
+  if enemy_number < 1:
+    font = pygame.font.SysFont('Calibri', 25, True, False)
+    text = font.render(bossHealth, True, WHITE)
+    screen.blit(text, [1005, 190])
+    font = pygame.font.SysFont('Calibri', 25, True, False)
+    text = font.render(bossBullets, True, WHITE)
+    screen.blit(text, [1005, 220])
+  #End If
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
