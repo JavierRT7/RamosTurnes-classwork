@@ -155,7 +155,7 @@ class Enemy(pygame.sprite.Sprite):
   #End Procedure
 #End Class
 class Boss(pygame.sprite.Sprite):
-  def __init__(self, color, width, height, speed_x, speed_y, wall_group):
+  def __init__(self, color, width, height, speed_x, speed_y, wall_group, health, bullets):
     # Set speed of the sprite
     self.speed_x = speed_x
     self.speed_y = speed_y
@@ -169,6 +169,8 @@ class Boss(pygame.sprite.Sprite):
     self.old_x = self.rect.x
     self.old_y = self.rect.y
     self.wall_group = wall_group
+    self.health = health
+    self.bullets = bullets
     #self.enemy_hit_list = []pygame.sprite.spritecollide(self, wall_group, False)
   #End Procedure
   def update(self):
@@ -186,6 +188,32 @@ class Boss(pygame.sprite.Sprite):
     #Next
     self.old_x = self.rect.x
     self.old_y = self.rect.y
+    if self.bullets > 0:
+      if player.rect.x == boss.rect.x and player.rect.y > boss.rect.y:
+        boss_bullet = Bullet(BLACK, 5, 5, 0, 5)
+        boss_bullet_group.add(boss_bullet)
+        all_sprites_group.add(boss_bullet)
+        boss.bullets = boss.bullets - 1
+      #End If
+      if player.rect.x == boss.rect.x and player.rect.y < boss.rect.y:
+        boss_bullet = Bullet(BLACK, 5, 5, 0, -5)
+        boss_bullet_group.add(boss_bullet)
+        all_sprites_group.add(boss_bullet)
+        boss.bullets = boss.bullets - 1
+      #End If
+      if player.rect.y == boss.rect.y and player.rect.x > boss.rect.x:
+        boss_bullet = Bullet(BLACK, 5, 5, 0, 5)
+        boss_bullet_group.add(boss_bullet)
+        all_sprites_group.add(boss_bullet)
+        boss.bullets = boss.bullets - 1
+      #End If
+      if player.rect.y == boss.rect.y and player.rect.x < boss.rect.x:
+        boss_bullet = Bullet(BLACK, 5, 5, 0, -5)
+        boss_bullet_group.add(boss_bullet)
+        all_sprites_group.add(boss_bullet)
+        boss.bullets = boss.bullets - 1
+      #End If
+    #End If
   #End Procedure
 #End Class
 class Bullet(pygame.sprite.Sprite):
@@ -255,6 +283,7 @@ display_group = pygame.sprite.Group()
 enemy_group = pygame.sprite.Group()
 bullet_group = pygame.sprite.Group()
 boss_group = pygame.sprite.Group()
+boss_bullet_group = pygame.sprite.Group()
 enemy_number = 5
 player = Player(BLUE, 20, 20, 100, 0, 0, 0, 1000)
 player_group.add(player)
@@ -307,10 +336,12 @@ while not done:
   bullet_hit_group = pygame.sprite.groupcollide(bullet_group, wall_group, dokilla=True, dokillb=False, collided=None)
   bullet_enemy_hit_group = pygame.sprite.groupcollide(bullet_group, enemy_group, dokilla=False, dokillb=True, collided=None)
   enemy_player_hit_group = pygame.sprite.groupcollide(player_group, enemy_group, dokilla=False, dokillb=True, collided=None)
+  player_boss_hit_group = pygame.sprite.groupcollide(player_group, boss_group, dokilla=True, dokillb=False, collided=None)
+  boss_bullet_hit_group = pygame.sprite.groupcollide(bullet_group, wall_group, dokilla=True, dokillb=False, collided=None)
   for foo in bullet_enemy_hit_group:
     enemy_number = enemy_number - 1
     if enemy_number == 0:
-      boss = Boss(ORANGE, 30, 30, 5, 0, wall_group)
+      boss = Boss(ORANGE, 30, 30, 5, 0, wall_group, 200, 500)
       boss.rect.x = 40
       boss.rect.y = 40
       boss_group.add(boss)
@@ -321,7 +352,7 @@ while not done:
     player.health = player.health - 5
     enemy_number = enemy_number - 1
     if enemy_number == 0:
-      boss = Boss(ORANGE, 30, 30, 5, 0, wall_group)
+      boss = Boss(ORANGE, 30, 30, 5, 0, wall_group, 200, 500)
       boss.rect.x = 40
       boss.rect.y = 40
       boss_group.add(boss)
