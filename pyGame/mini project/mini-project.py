@@ -298,7 +298,7 @@ enemy_group = pygame.sprite.Group()
 bullet_group = pygame.sprite.Group()
 boss_group = pygame.sprite.Group()
 boss_bullet_group = pygame.sprite.Group()
-enemy_number = 5
+enemy_number = 30
 player = Player(BLUE, 20, 20, 100, 0, 0, 0, 1000)
 player_group.add(player)
 all_sprites_group.add(player)
@@ -390,11 +390,11 @@ while not done:
     #End If
   #Next
   if enemy_number < 1:
-    if boss.health == 0:
+    if boss.health < 1:
       boss_kill_group = pygame.sprite.groupcollide(bullet_group, boss_group, dokilla=True, dokillb=True, collided=None)
     #End If
   #End If
-  if player.health == 0:
+  if player.health < 1:
     player_kill_group = pygame.sprite.groupcollide(boss_bullet_group, player_group, dokilla=True, dokillb=True, collided=None)
   #End If
   enemyNumber = 'Enemies: ' + str(enemy_number)
