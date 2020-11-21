@@ -431,12 +431,14 @@ while not done:
   text = font.render(enemyNumber, True, WHITE)
   screen.blit(text, [1005, 160])
   if enemy_number < 1:
-    font = pygame.font.SysFont('Calibri', 25, True, False)
-    text = font.render(bossHealth, True, WHITE)
-    screen.blit(text, [1005, 190])
-    font = pygame.font.SysFont('Calibri', 25, True, False)
-    text = font.render(bossBullets, True, WHITE)
-    screen.blit(text, [1005, 220])
+    if boss.health > 0:
+      font = pygame.font.SysFont('Calibri', 25, True, False)
+      text = font.render(bossHealth, True, WHITE)
+      screen.blit(text, [1005, 190])
+      font = pygame.font.SysFont('Calibri', 25, True, False)
+      text = font.render(bossBullets, True, WHITE)
+      screen.blit(text, [1005, 220])
+    #End If
   #End If
   # -- flip display to reveal new position of objects
   pygame.display.flip()
