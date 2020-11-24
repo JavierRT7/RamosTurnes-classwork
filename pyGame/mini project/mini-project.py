@@ -19,7 +19,7 @@ pygame.display.set_caption("My Window")
 #Classes
 class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
-  def __init__(self, color, width, height, health, money, keys, score, bullets):
+  def __init__(self, width, height, health, money, keys, score, bullets):
     # Set speed of the sprite
     self.speed_x = 0
     self.speed_y = 0
@@ -31,8 +31,8 @@ class Player(pygame.sprite.Sprite):
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
-    self.image = pygame.Surface([width,height])
-    self.image.fill(color)
+    #self.image = pygame.Surface([width,height])
+    self.image = pygame.image.load('redders.jpg')
     # Set the position of the sprite
     self.rect = self.image.get_rect()
     self.rect.x = 490
@@ -299,7 +299,7 @@ bullet_group = pygame.sprite.Group()
 boss_group = pygame.sprite.Group()
 boss_bullet_group = pygame.sprite.Group()
 enemy_number = 30
-player = Player(BLUE, 20, 20, 100, 0, 0, 0, 1000)
+player = Player(20, 20, 100, 0, 0, 0, 1000)
 player_group.add(player)
 all_sprites_group.add(player)
 for y in range(18):
