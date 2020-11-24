@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
     super().__init__()
     # Create a sprite and fill it with colour
     #self.image = pygame.Surface([width,height])
-    self.image = pygame.image.load('redders.jpg')
+    self.image = pygame.image.load('paccers.png')
     # Set the position of the sprite
     self.rect = self.image.get_rect()
     self.rect.x = 490
@@ -163,15 +163,14 @@ class Enemy(pygame.sprite.Sprite):
   #End Procedure
 #End Class
 class Boss(pygame.sprite.Sprite):
-  def __init__(self, color, width, height, speed_x, speed_y, wall_group, health, bullets):
+  def __init__(self, width, height, speed_x, speed_y, wall_group, health, bullets):
     # Set speed of the sprite
     self.speed_x = speed_x
     self.speed_y = speed_y
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
-    self.image = pygame.Surface([width,height])
-    self.image.fill(color)
+    self.image = pygame.image.load('redders.jpg')
     # Set the position of the sprite
     self.rect = self.image.get_rect()
     self.old_x = self.rect.x
@@ -371,7 +370,7 @@ while not done:
   for foo in bullet_enemy_hit_group:
     enemy_number = enemy_number - 1
     if enemy_number == 0:
-      boss = Boss(ORANGE, 30, 30, 5, 0, wall_group, 200, 500)
+      boss = Boss(30, 30, 5, 0, wall_group, 200, 500)
       boss.rect.x = 40
       boss.rect.y = 40
       boss_group.add(boss)
@@ -382,7 +381,7 @@ while not done:
     player.health = player.health - 5
     enemy_number = enemy_number - 1
     if enemy_number == 0:
-      boss = Boss(ORANGE, 30, 30, 5, 0, wall_group, 200, 500)
+      boss = Boss(30, 30, 5, 0, wall_group, 200, 500)
       boss.rect.x = 40
       boss.rect.y = 40
       boss_group.add(boss)
