@@ -62,7 +62,7 @@ class Player(pygame.sprite.Sprite):
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, 0, -5)
         bullet.rect.x = player.rect.x + 10
-        bullet.rect.y = player.rect.y + 10
+        bullet.rect.y = player.rect.y - 3
         bullet_group.add(bullet)
         all_sprites_group.add(bullet)
         self.bullets = self.bullets - 1
@@ -72,7 +72,7 @@ class Player(pygame.sprite.Sprite):
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, 0, 5)
         bullet.rect.x = player.rect.x + 10
-        bullet.rect.y = player.rect.y + 10
+        bullet.rect.y = player.rect.y + 23
         bullet_group.add(bullet)
         all_sprites_group.add(bullet)
         self.bullets = self.bullets - 1
@@ -81,7 +81,7 @@ class Player(pygame.sprite.Sprite):
     if keys[pygame.K_a]:
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, -5, 0)
-        bullet.rect.x = player.rect.x + 10
+        bullet.rect.x = player.rect.x - 3
         bullet.rect.y = player.rect.y + 10
         bullet_group.add(bullet)
         all_sprites_group.add(bullet)
@@ -91,7 +91,7 @@ class Player(pygame.sprite.Sprite):
     if keys[pygame.K_d]:
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, 5, 0)
-        bullet.rect.x = player.rect.x + 10
+        bullet.rect.x = player.rect.x + 23
         bullet.rect.y = player.rect.y + 10
         bullet_group.add(bullet)
         all_sprites_group.add(bullet)
