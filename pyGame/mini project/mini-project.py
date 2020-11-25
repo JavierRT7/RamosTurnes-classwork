@@ -38,7 +38,6 @@ class Player(pygame.sprite.Sprite):
     self.rect.x = 490
     self.rect.y = 40
   #End Procedure
-#edit
 # Class update function - runs for each pass through the game loop
   def update(self):
     keys = pygame.key.get_pressed()
