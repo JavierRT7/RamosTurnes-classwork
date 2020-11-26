@@ -392,8 +392,9 @@ while not done:
       boss_kill_group = pygame.sprite.groupcollide(bullet_group, boss_group, dokilla=True, dokillb=True, collided=None)
     #End If
   #End If
-  if player.health < 1:
+  if player.health < 6:
     player_kill_group = pygame.sprite.groupcollide(boss_bullet_group, player_group, dokilla=True, dokillb=True, collided=None)
+    player_kill2_group = pygame.sprite.groupcollide(enemy_group, player_group, dokilla=True, dokillb=True, collided=None)
   #End If
   enemyNumber = 'Enemies: ' + str(enemy_number)
   Health = 'Health: ' + str(player.health)
