@@ -308,7 +308,7 @@ enemy_group = pygame.sprite.Group()
 bullet_group = pygame.sprite.Group()
 boss_group = pygame.sprite.Group()
 boss_bullet_group = pygame.sprite.Group()
-enemy_number = 30
+enemy_number = 20
 player = Player(20, 20, 100, 0, 0, 0, 1000)
 player_group.add(player)
 all_sprites_group.add(player)
@@ -332,8 +332,8 @@ for y in range(18):
 #Next
 for counter in range(enemy_number):
   enemy = Enemy(ORANGE, 20, 20, random.randint(-3, 3), 0, wall_group)
-  enemy.rect.x = random.randint(50, 950)
-  enemy.rect.y = random.randint(650, 660)
+  enemy.rect.x = (counter + 1) * 45
+  enemy.rect.y = 660
   enemy_group.add(enemy)
   all_sprites_group.add(enemy)
 #Next
