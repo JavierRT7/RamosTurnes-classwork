@@ -157,6 +157,13 @@ class Enemy(pygame.sprite.Sprite):
       self.rect.x = self.old_x
       self.rect.y = self.old_y
     #Next
+    enemy_group.remove(self)
+    enemy_enemy_hit_list = pygame.sprite.spritecollide(self, enemy_group, False)
+    for foo in enemy_enemy_hit_list:
+      self.speed_x = random.randint(-3, 3)
+      self.speed_y = random.randint(-3, 3)
+    #Next
+    enemy_group.add(self)
     self.old_x = self.rect.x
     self.old_y = self.rect.y
   #End Procedure
@@ -347,7 +354,7 @@ while not done:
   # -- Game logic goes after this comment
   bullet_hit_group = pygame.sprite.groupcollide(bullet_group, wall_group, dokilla=True, dokillb=False, collided=None)
   bullet_enemy_hit_group = pygame.sprite.groupcollide(bullet_group, enemy_group, dokilla=False, dokillb=True, collided=None)
-  enemy_player_hit_group = pygame.sprite.groupcollide(player_group, enemy_group, dokilla=False, dokillb=True, collided=None)
+  enemy_player_hit_group = pygame.sprite.spritecollide(player, enemy_group, True)
   player_boss_hit_group = pygame.sprite.groupcollide(player_group, boss_group, dokilla=False, dokillb=False, collided=None)
   boss_bullet_hit_group = pygame.sprite.groupcollide(boss_bullet_group, wall_group, dokilla=True, dokillb=False, collided=None)
   for foo in player_boss_hit_group:
