@@ -423,7 +423,7 @@ while not done:
   #Next
   if enemy_number < 1:
     if boss.health < 1:
-      boss_kill_group = pygame.sprite.groupcollide(bullet_group, boss_group, dokilla=True, dokillb=True, collided=None)
+      all_sprites_group.remove(boss)
     #End If
   #End If
   if player.health < 1:
@@ -443,7 +443,15 @@ while not done:
   # -- Screen background is BLACK
   screen.fill (screen_colour)
   # -- Draw here
-  if player.health > 0:
+  if player.health < 1:
+    bigfont = pygame.font.SysFont('Calibri', 60, True, False)
+    bigtext = bigfont.render('You Lose! Bad Luck Bruv!', True, BLACK)
+    screen.blit(bigtext, [300, 320])
+  elif enemy_number < 1 and boss.health < 1 and player.health > 0:
+    bigfont = pygame.font.SysFont('Calibri', 60, True, False)
+    bigtext = bigfont.render('Winner Winner Chicken Dinner!', True, BLACK)
+    screen.blit(bigtext, [225, 320])
+  else:
     all_sprites_group.draw (screen)
     font = pygame.font.SysFont('Calibri', 25, True, False)
     text = font.render(Health, True, WHITE)
@@ -473,10 +481,7 @@ while not done:
         screen.blit(text, [1005, 220])
       #End If
     #End If
-  else:
-    bigfont = pygame.font.SysFont('Calibri', 60, True, False)
-    bigtext = bigfont.render('You Lose! Bad Luck Bruv!', True, BLACK)
-    screen.blit(bigtext, [300, 320])
+  #End If
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
