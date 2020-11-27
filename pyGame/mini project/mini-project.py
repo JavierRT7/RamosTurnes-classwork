@@ -162,13 +162,13 @@ class Enemy(pygame.sprite.Sprite):
     for foo in enemy_enemy_hit_list:
       self.speed_x = random.randint(-3, 3)
       self.speed_y = random.randint(-3, 3)
-      if self.speed_x == 0 and self.speed_y == 0:
-        self.speed_x = random.randint(-3, 3)
-        self.speed_y = random.randint(-3, 3)
       self.rect.x = self.old_x
       self.rect.y = self.old_y
     #Next
     enemy_group.add(self)
+    if self.speed_x == 0 and self.speed_y == 0:
+      self.speed_x = random.randint(-3, 3)
+      self.speed_y = random.randint(-3, 3)
     self.old_x = self.rect.x
     self.old_y = self.rect.y
   #End Procedure
