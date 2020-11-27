@@ -162,6 +162,11 @@ class Enemy(pygame.sprite.Sprite):
     for foo in enemy_enemy_hit_list:
       self.speed_x = random.randint(-3, 3)
       self.speed_y = random.randint(-3, 3)
+      if self.speed_x == 0 and self.speed_y == 0:
+        self.speed_x = random.randint(-3, 3)
+        self.speed_y = random.randint(-3, 3)
+      self.rect.x = self.old_x
+      self.rect.y = self.old_y
     #Next
     enemy_group.add(self)
     self.old_x = self.rect.x
@@ -263,12 +268,12 @@ map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 [1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 [1,0,0,1,0,0,1,1,1,1,1,1,1,0,1,1,0,1],
 [1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,1],
-[1,0,1,1,1,1,1,1,1,0,0,0,1,0,0,1,1,1],
+[1,0,1,1,1,1,1,1,1,0,0,0,1,0,0,1,0,1],
 [1,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,1],
 [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1],
 [1,0,1,1,1,0,0,0,1,0,0,1,1,1,1,0,0,1],
 [1,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1],
-[1,0,0,1,1,1,0,0,1,1,1,1,1,0,0,0,1,1],
+[1,0,0,1,1,1,0,0,1,1,1,1,1,0,0,0,0,1],
 [1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1],
 [1,0,0,1,1,1,0,0,0,0,1,0,1,1,1,1,0,1],
 [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -326,9 +331,9 @@ for y in range(18):
     #Next
 #Next
 for counter in range(enemy_number):
-  enemy = Enemy(ORANGE, 20, 20, -2, 0, wall_group)
-  enemy.rect.x = 490
-  enemy.rect.y = 350
+  enemy = Enemy(ORANGE, 20, 20, random.randint(-3, 3), 0, wall_group)
+  enemy.rect.x = random.randint(50, 950)
+  enemy.rect.y = random.randint(650, 660)
   enemy_group.add(enemy)
   all_sprites_group.add(enemy)
 #Next
