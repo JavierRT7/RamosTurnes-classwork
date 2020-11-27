@@ -348,8 +348,11 @@ while not done:
   bullet_hit_group = pygame.sprite.groupcollide(bullet_group, wall_group, dokilla=True, dokillb=False, collided=None)
   bullet_enemy_hit_group = pygame.sprite.groupcollide(bullet_group, enemy_group, dokilla=False, dokillb=True, collided=None)
   enemy_player_hit_group = pygame.sprite.groupcollide(player_group, enemy_group, dokilla=False, dokillb=True, collided=None)
-  player_boss_hit_group = pygame.sprite.groupcollide(player_group, boss_group, dokilla=True, dokillb=False, collided=None)
+  player_boss_hit_group = pygame.sprite.groupcollide(player_group, boss_group, dokilla=False, dokillb=False, collided=None)
   boss_bullet_hit_group = pygame.sprite.groupcollide(boss_bullet_group, wall_group, dokilla=True, dokillb=False, collided=None)
+  for foo in player_boss_hit_group:
+    player.health = 0
+  #Next
   if enemy_number < 1:
     if boss.health > 0:
       bullet_boss_hit_group = pygame.sprite.groupcollide(bullet_group, boss_group, dokilla=True, dokillb=False, collided=None)
@@ -392,9 +395,8 @@ while not done:
       boss_kill_group = pygame.sprite.groupcollide(bullet_group, boss_group, dokilla=True, dokillb=True, collided=None)
     #End If
   #End If
-  if player.health < 6:
-    player_kill_group = pygame.sprite.groupcollide(boss_bullet_group, player_group, dokilla=True, dokillb=True, collided=None)
-    player_kill2_group = pygame.sprite.groupcollide(enemy_group, player_group, dokilla=True, dokillb=True, collided=None)
+  if player.health < 1:
+    all_sprites_group.remove(player)
   #End If
   enemyNumber = 'Enemies: ' + str(enemy_number)
   Health = 'Health: ' + str(player.health)
@@ -410,35 +412,40 @@ while not done:
   # -- Screen background is BLACK
   screen.fill (screen_colour)
   # -- Draw here
-  all_sprites_group.draw (screen)
-  font = pygame.font.SysFont('Calibri', 25, True, False)
-  text = font.render(Health, True, WHITE)
-  screen.blit(text, [1005, 10])
-  font = pygame.font.SysFont('Calibri', 25, True, False)
-  text = font.render(Money, True, WHITE)
-  screen.blit(text, [1005, 40])
-  font = pygame.font.SysFont('Calibri', 25, True, False)
-  text = font.render(Keys, True, WHITE)
-  screen.blit(text, [1005, 70])
-  font = pygame.font.SysFont('Calibri', 25, True, False)
-  text = font.render(Score, True, WHITE)
-  screen.blit(text, [1005, 100])
-  font = pygame.font.SysFont('Calibri', 25, True, False)
-  text = font.render(Bullets, True, WHITE)
-  screen.blit(text, [1005, 130])
-  font = pygame.font.SysFont('Calibri', 25, True, False)
-  text = font.render(enemyNumber, True, WHITE)
-  screen.blit(text, [1005, 160])
-  if enemy_number < 1:
-    if boss.health > 0:
-      font = pygame.font.SysFont('Calibri', 25, True, False)
-      text = font.render(bossHealth, True, WHITE)
-      screen.blit(text, [1005, 190])
-      font = pygame.font.SysFont('Calibri', 25, True, False)
-      text = font.render(bossBullets, True, WHITE)
-      screen.blit(text, [1005, 220])
+  if player.health > 0:
+    all_sprites_group.draw (screen)
+    font = pygame.font.SysFont('Calibri', 25, True, False)
+    text = font.render(Health, True, WHITE)
+    screen.blit(text, [1005, 10])
+    font = pygame.font.SysFont('Calibri', 25, True, False)
+    text = font.render(Money, True, WHITE)
+    screen.blit(text, [1005, 40])
+    font = pygame.font.SysFont('Calibri', 25, True, False)
+    text = font.render(Keys, True, WHITE)
+    screen.blit(text, [1005, 70])
+    font = pygame.font.SysFont('Calibri', 25, True, False)
+    text = font.render(Score, True, WHITE)
+    screen.blit(text, [1005, 100])
+    font = pygame.font.SysFont('Calibri', 25, True, False)
+    text = font.render(Bullets, True, WHITE)
+    screen.blit(text, [1005, 130])
+    font = pygame.font.SysFont('Calibri', 25, True, False)
+    text = font.render(enemyNumber, True, WHITE)
+    screen.blit(text, [1005, 160])
+    if enemy_number < 1:
+      if boss.health > 0:
+        font = pygame.font.SysFont('Calibri', 25, True, False)
+        text = font.render(bossHealth, True, WHITE)
+        screen.blit(text, [1005, 190])
+        font = pygame.font.SysFont('Calibri', 25, True, False)
+        text = font.render(bossBullets, True, WHITE)
+        screen.blit(text, [1005, 220])
+      #End If
     #End If
-  #End If
+  else:
+    bigfont = pygame.font.SysFont('Calibri', 60, True, False)
+    bigtext = bigfont.render('You Lose! Bad Luck Bruv!', True, BLACK)
+    screen.blit(bigtext, [300, 320])
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
