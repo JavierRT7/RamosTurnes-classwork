@@ -42,22 +42,27 @@ class Player(pygame.sprite.Sprite):
   def update(self):
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP]:
+      self.image = pygame.image.load('paccers - up.png')
       self.speed_y = -3
       self.rect.y = self.rect.y + self.speed_y
     #End If
     if keys[pygame.K_DOWN]:
+      self.image = pygame.image.load('paccers - down.png')
       self.speed_y = 3
       self.rect.y = self.rect.y + self.speed_y
     #End If
     if keys[pygame.K_RIGHT]:
+      self.image = pygame.image.load('paccers.png')
       self.speed_x = 3
       self.rect.x = self.rect.x + self.speed_x
     #End If
     if keys[pygame.K_LEFT]:
+      self.image = pygame.image.load('paccers - left.png')
       self.speed_x = -3
       self.rect.x = self.rect.x + self.speed_x
     #End If
     if keys[pygame.K_w]:
+      self.image = pygame.image.load('paccers - up.png')
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, 0, -5)
         bullet.rect.x = player.rect.x + 10
@@ -68,6 +73,7 @@ class Player(pygame.sprite.Sprite):
       #End If
     #End If
     if keys[pygame.K_s]:
+      self.image = pygame.image.load('paccers - down.png')
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, 0, 5)
         bullet.rect.x = player.rect.x + 10
@@ -78,6 +84,7 @@ class Player(pygame.sprite.Sprite):
       #End If
     #End If
     if keys[pygame.K_a]:
+      self.image = pygame.image.load('paccers - left.png')
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, -5, 0)
         bullet.rect.x = player.rect.x - 3
@@ -88,6 +95,7 @@ class Player(pygame.sprite.Sprite):
       #End If
     #End If
     if keys[pygame.K_d]:
+      self.image = pygame.image.load('paccers.png')
       if self.bullets > 0:
         bullet = Bullet(RED, 5, 5, 5, 0)
         bullet.rect.x = player.rect.x + 23
@@ -128,15 +136,14 @@ class Display(pygame.sprite.Sprite):
 #End Class
 class Enemy(pygame.sprite.Sprite):
   # Define the constructor for snow
-  def __init__(self, color, width, height, speed_x, speed_y, wall_group):
+  def __init__(self, width, height, speed_x, speed_y, wall_group):
     # Set speed of the sprite
     self.speed_x = speed_x
     self.speed_y = speed_y
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
-    self.image = pygame.Surface([width,height])
-    self.image.fill(color)
+    self.image = pygame.image.load('ghost.jpg')
     # Set the position of the sprite
     self.rect = self.image.get_rect()
     self.old_x = self.rect.x
@@ -145,6 +152,12 @@ class Enemy(pygame.sprite.Sprite):
     #self.enemy_hit_list = []pygame.sprite.spritecollide(self, wall_group, False)
   #End Procedure
   def update(self):
+    if self.speed_x > 0:
+      self.image = pygame.image.load('ghost - right.jpg')
+    #End If
+    if self.speed_x < 0:
+      self.image = pygame.image.load('ghost.jpg')
+    #End If
     self.rect.x = self.rect.x + self.speed_x
     self.rect.y = self.rect.y + self.speed_y
     enemy_hit_list = pygame.sprite.spritecollide(self, self.wall_group, False)
@@ -181,7 +194,7 @@ class Boss(pygame.sprite.Sprite):
     # Call the sprite constructor
     super().__init__()
     # Create a sprite and fill it with colour
-    self.image = pygame.image.load('redders.jpg')
+    self.image = pygame.image.load('boss.png')
     # Set the position of the sprite
     self.rect = self.image.get_rect()
     self.old_x = self.rect.x
@@ -192,6 +205,12 @@ class Boss(pygame.sprite.Sprite):
     #self.enemy_hit_list = []pygame.sprite.spritecollide(self, wall_group, False)
   #End Procedure
   def update(self):
+    if self.speed_x > 0:
+      self.image = pygame.image.load('boss.png')
+    #End If
+    if self.speed_x < 0:
+      self.image = pygame.image.load('boss - left.png')
+    #End If
     self.rect.x = self.rect.x + self.speed_x
     self.rect.y = self.rect.y + self.speed_y
     boss_hit_list = pygame.sprite.spritecollide(self, self.wall_group, False)
@@ -331,7 +350,7 @@ for y in range(18):
     #Next
 #Next
 for counter in range(enemy_number):
-  enemy = Enemy(ORANGE, 20, 20, random.randint(-3, 3), 0, wall_group)
+  enemy = Enemy(20, 20, random.randint(-3, 3), -3, wall_group)
   enemy.rect.x = (counter + 1) * 45
   enemy.rect.y = 660
   enemy_group.add(enemy)
