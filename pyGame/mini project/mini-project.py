@@ -11,6 +11,8 @@ ORANGE = (255,150,0)
 GREEN = (0,255,0)
 # -- Initialise PyGame
 pygame.init()
+pygame.font.init()
+pygame.mixer.init()
 # -- Blank Screen
 size = (1200,720)
 screen = pygame.display.set_mode(size)
