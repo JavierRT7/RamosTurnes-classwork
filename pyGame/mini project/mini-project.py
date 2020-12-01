@@ -453,11 +453,11 @@ while not done:
   if player.health < 1:
     bigfont = pygame.font.SysFont('Calibri', 60, True, False)
     bigtext = bigfont.render('You Lose!', True, BLACK)
-    screen.blit(bigtext, [350, 320])
+    screen.blit(bigtext, [400, 320])
   elif enemy_number < 1 and boss.health < 1 and player.health > 0:
     bigfont = pygame.font.SysFont('Calibri', 60, True, False)
     bigtext = bigfont.render('Winner!', True, BLACK)
-    screen.blit(bigtext, [350, 320])
+    screen.blit(bigtext, [400, 320])
   else:
     player_group.draw (screen)
     level_1_sprites_group.draw (screen)
