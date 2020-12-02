@@ -71,7 +71,7 @@ class Player(pygame.sprite.Sprite):
         bullet.rect.x = player.rect.x + 10
         bullet.rect.y = player.rect.y - 3
         bullet_group.add(bullet)
-        level_1_sprites_group.add(bullet)
+        all_sprites_group.add(bullet)
         self.bullets = self.bullets - 1
       #End If
     #End If
@@ -82,7 +82,7 @@ class Player(pygame.sprite.Sprite):
         bullet.rect.x = player.rect.x + 10
         bullet.rect.y = player.rect.y + 23
         bullet_group.add(bullet)
-        level_1_sprites_group.add(bullet)
+        all_sprites_group.add(bullet)
         self.bullets = self.bullets - 1
       #End If
     #End If
@@ -93,7 +93,7 @@ class Player(pygame.sprite.Sprite):
         bullet.rect.x = player.rect.x - 3
         bullet.rect.y = player.rect.y + 10
         bullet_group.add(bullet)
-        level_1_sprites_group.add(bullet)
+        all_sprites_group.add(bullet)
         self.bullets = self.bullets - 1
       #End If
     #End If
@@ -104,7 +104,7 @@ class Player(pygame.sprite.Sprite):
         bullet.rect.x = player.rect.x + 23
         bullet.rect.y = player.rect.y + 10
         bullet_group.add(bullet)
-        level_1_sprites_group.add(bullet)
+        all_sprites_group.add(bullet)
         self.bullets = self.bullets - 1
       #End If
     #End If
@@ -124,7 +124,10 @@ class Wall(pygame.sprite.Sprite):
     #End Procedure
     def update(self):
       if enemy_number < 1:
-        self.image.fill(GREEN)
+        self.image.fill(YELLOW)
+        if boss.health < 1:
+          self.image.fill(RED)
+        #End If
       #End If
 #End Class
 class Display(pygame.sprite.Sprite):
@@ -230,15 +233,13 @@ class Boss(pygame.sprite.Sprite):
       self.rect.x = self.old_x
       self.rect.y = self.old_y
     #Next
-    self.old_x = self.rect.x
-    self.old_y = self.rect.y
     if self.bullets > 0:
       if player.rect.x == boss.rect.x and player.rect.y > boss.rect.y:
         boss_bullet = Bullet(RED, 5, 5, 0, 5)
         boss_bullet.rect.x = boss.rect.x + 15
         boss_bullet.rect.y = boss.rect.y + 15
         boss_bullet_group.add(boss_bullet)
-        level_1_sprites_group.add(boss_bullet)
+        all_sprites_group.add(boss_bullet)
         boss.bullets = boss.bullets - 1
       #End If
       if player.rect.x == boss.rect.x and player.rect.y < boss.rect.y:
@@ -246,7 +247,7 @@ class Boss(pygame.sprite.Sprite):
         boss_bullet.rect.x = boss.rect.x + 15
         boss_bullet.rect.y = boss.rect.y + 15
         boss_bullet_group.add(boss_bullet)
-        level_1_sprites_group.add(boss_bullet)
+        all_sprites_group.add(boss_bullet)
         boss.bullets = boss.bullets - 1
       #End If
       if player.rect.y == boss.rect.y and player.rect.x > boss.rect.x:
@@ -254,7 +255,7 @@ class Boss(pygame.sprite.Sprite):
         boss_bullet.rect.x = boss.rect.x + 15
         boss_bullet.rect.y = boss.rect.y + 15
         boss_bullet_group.add(boss_bullet)
-        level_1_sprites_group.add(boss_bullet)
+        all_sprites_group.add(boss_bullet)
         boss.bullets = boss.bullets - 1
       #End If
       if player.rect.y == boss.rect.y and player.rect.x < boss.rect.x:
@@ -262,10 +263,24 @@ class Boss(pygame.sprite.Sprite):
         boss_bullet.rect.x = boss.rect.x + 15
         boss_bullet.rect.y = boss.rect.y + 15
         boss_bullet_group.add(boss_bullet)
-        level_1_sprites_group.add(boss_bullet)
+        all_sprites_group.add(boss_bullet)
         boss.bullets = boss.bullets - 1
       #End If
     #End If
+    boss_group.remove(self)
+    boss_boss_hit_list = pygame.sprite.spritecollide(self, boss_group, False)
+    for foo in boss_boss_hit_list:
+      self.speed_x = random.randint(-5, 5)
+      self.speed_y = random.randint(-5, 5)
+      self.rect.x = self.old_x
+      self.rect.y = self.old_y
+    #Next
+    boss_group.add(self)
+    if self.speed_x == 0 and self.speed_y == 0:
+      self.speed_x = random.randint(-5, 5)
+      self.speed_y = random.randint(-5, 5)
+    self.old_x = self.rect.x
+    self.old_y = self.rect.y
   #End Procedure
 #End Class
 class Bullet(pygame.sprite.Sprite):
@@ -326,7 +341,7 @@ map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]]
 screen_colour = WHITE
 done = False
-level_1_sprites_group = pygame.sprite.Group()
+all_sprites_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 wall_group = pygame.sprite.Group()
 display_group = pygame.sprite.Group()
@@ -335,14 +350,17 @@ bullet_group = pygame.sprite.Group()
 boss_group = pygame.sprite.Group()
 boss_bullet_group = pygame.sprite.Group()
 enemy_number = 20
+level = 1
+create = True
 player = Player(20, 20, 100, 0, 0, 0, 1000)
 player_group.add(player)
+all_sprites_group.add(player)
 for y in range(18):
     for x in range(25):
         if map[x][y] == 1:
-            my_wall = Wall(BLUE, 40, 40, x*40, y *40)
+            my_wall = Wall(GREEN, 40, 40, x*40, y *40)
             wall_group.add(my_wall)
-            level_1_sprites_group.add(my_wall)
+            all_sprites_group.add(my_wall)
         #End If
     #Next
 #Next
@@ -351,7 +369,7 @@ for y in range(18):
         if map[x][y] == 2:
             my_display = Display(BLACK, 40, 40, x*40, y *40)
             display_group.add(my_display)
-            level_1_sprites_group.add(my_display)
+            all_sprites_group.add(my_display)
         #End If
     #Next
 #Next
@@ -360,7 +378,7 @@ for counter in range(enemy_number):
   enemy.rect.x = (counter + 1) * 45
   enemy.rect.y = 660
   enemy_group.add(enemy)
-  level_1_sprites_group.add(enemy)
+  all_sprites_group.add(enemy)
 #Next
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
@@ -409,31 +427,43 @@ while not done:
   for foo in bullet_enemy_hit_group:
     enemy_number = enemy_number - 1
     if enemy_number == 0:
-      boss = Boss(30, 30, 5, 0, wall_group, 200, 500)
+      boss = Boss(30, 30, 5, 0, wall_group, 100, 200)
       boss.rect.x = 40
       boss.rect.y = 40
       boss_group.add(boss)
-      level_1_sprites_group.add(boss)
+      all_sprites_group.add(boss)
     #End If
   #Next
   for foo in enemy_player_hit_group:
     player.health = player.health - 5
     enemy_number = enemy_number - 1
     if enemy_number == 0:
-      boss = Boss(30, 30, 5, 0, wall_group, 200, 500)
+      boss = Boss(30, 30, 5, 0, wall_group, 100, 200)
       boss.rect.x = 40
       boss.rect.y = 40
       boss_group.add(boss)
-      level_1_sprites_group.add(boss)
+      all_sprites_group.add(boss)
     #End If
   #Next
   if enemy_number < 1:
     if boss.health < 1:
-      level_1_sprites_group.remove(boss)
+      boss.bullets = 0
+      all_sprites_group.remove(boss)
+      boss_group.remove(boss)
+      if create == True:
+        for counter in range(2):
+          boss2 = Boss(30, 30, 5, 0, wall_group, 100, 250)
+          boss2.rect.x = 40
+          boss2.rect.y = 40
+          boss_group.add(boss2)
+          all_sprites_group.add(boss2)
+          create = False
+        #Next
+      #End If
     #End If
   #End If
   if player.health < 1:
-    level_1_sprites_group.remove(player)
+    all_sprites_group.remove(player)
   #End If
   enemyNumber = 'Enemies: ' + str(enemy_number)
   Health = 'Health: ' + str(player.health)
@@ -441,26 +471,25 @@ while not done:
   Keys = 'Keys: ' + str(player.keys)
   Score = 'Score: ' + str(player.score)
   Bullets = 'Bullets: ' + str(player.bullets)
+  Level = 'Level: ' + str(level)
   if enemy_number < 1:
     bossHealth = 'Boss Health: ' + str(boss.health)
     bossBullets = 'Boss Bullets: ' + str(boss.bullets)
   #End If
-  player_group.update()
-  level_1_sprites_group.update()
+  all_sprites_group.update()
   # -- Screen background is BLACK
   screen.fill (screen_colour)
   # -- Draw here
   if player.health < 1:
     bigfont = pygame.font.SysFont('Calibri', 60, True, False)
     bigtext = bigfont.render('You Lose!', True, BLACK)
-    screen.blit(bigtext, [400, 320])
-  elif enemy_number < 1 and boss.health < 1 and player.health > 0:
-    bigfont = pygame.font.SysFont('Calibri', 60, True, False)
-    bigtext = bigfont.render('Winner!', True, BLACK)
-    screen.blit(bigtext, [400, 320])
+    screen.blit(bigtext, [450, 320])
+   #elif enemy_number < 1 and boss.health < 1 and player.health > 0:
+    #bigfont = pygame.font.SysFont('Calibri', 60, True, False)
+    #bigtext = bigfont.render('Winner!', True, BLACK)
+    #screen.blit(bigtext, [450, 320])
   else:
-    player_group.draw (screen)
-    level_1_sprites_group.draw (screen)
+    all_sprites_group.draw (screen)
     font = pygame.font.SysFont('Calibri', 25, True, False)
     text = font.render(Health, True, WHITE)
     screen.blit(text, [1005, 10])
