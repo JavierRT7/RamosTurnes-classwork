@@ -124,10 +124,7 @@ class Wall(pygame.sprite.Sprite):
     #End Procedure
     def update(self):
       if enemy_number < 1:
-        self.image.fill(YELLOW)
-        if boss.health < 1:
-          self.image.fill(RED)
-        #End If
+        self.image.fill(RED)
       #End If
 #End Class
 class Display(pygame.sprite.Sprite):
@@ -350,8 +347,6 @@ bullet_group = pygame.sprite.Group()
 boss_group = pygame.sprite.Group()
 boss_bullet_group = pygame.sprite.Group()
 enemy_number = 20
-level = 1
-create = True
 player = Player(20, 20, 100, 0, 0, 0, 1000)
 player_group.add(player)
 all_sprites_group.add(player)
@@ -427,7 +422,7 @@ while not done:
   for foo in bullet_enemy_hit_group:
     enemy_number = enemy_number - 1
     if enemy_number == 0:
-      boss = Boss(30, 30, 5, 0, wall_group, 100, 200)
+      boss = Boss(30, 30, 5, 0, wall_group, 200, 200)
       boss.rect.x = 40
       boss.rect.y = 40
       boss_group.add(boss)
@@ -438,7 +433,7 @@ while not done:
     player.health = player.health - 5
     enemy_number = enemy_number - 1
     if enemy_number == 0:
-      boss = Boss(30, 30, 5, 0, wall_group, 100, 200)
+      boss = Boss(30, 30, 5, 0, wall_group, 200, 200)
       boss.rect.x = 40
       boss.rect.y = 40
       boss_group.add(boss)
@@ -450,16 +445,6 @@ while not done:
       boss.bullets = 0
       all_sprites_group.remove(boss)
       boss_group.remove(boss)
-      if create == True:
-        for counter in range(2):
-          boss2 = Boss(30, 30, 5, 0, wall_group, 100, 250)
-          boss2.rect.x = 40
-          boss2.rect.y = 40
-          boss_group.add(boss2)
-          all_sprites_group.add(boss2)
-          create = False
-        #Next
-      #End If
     #End If
   #End If
   if player.health < 1:
@@ -471,7 +456,6 @@ while not done:
   Keys = 'Keys: ' + str(player.keys)
   Score = 'Score: ' + str(player.score)
   Bullets = 'Bullets: ' + str(player.bullets)
-  Level = 'Level: ' + str(level)
   if enemy_number < 1:
     bossHealth = 'Boss Health: ' + str(boss.health)
     bossBullets = 'Boss Bullets: ' + str(boss.bullets)
@@ -483,11 +467,11 @@ while not done:
   if player.health < 1:
     bigfont = pygame.font.SysFont('Calibri', 60, True, False)
     bigtext = bigfont.render('You Lose!', True, BLACK)
-    screen.blit(bigtext, [450, 320])
-   #elif enemy_number < 1 and boss.health < 1 and player.health > 0:
-    #bigfont = pygame.font.SysFont('Calibri', 60, True, False)
-    #bigtext = bigfont.render('Winner!', True, BLACK)
-    #screen.blit(bigtext, [450, 320])
+    screen.blit(bigtext, [475, 320])
+  elif enemy_number < 1 and boss.health < 1 and player.health > 0:
+    bigfont = pygame.font.SysFont('Calibri', 60, True, False)
+    bigtext = bigfont.render('Winner!', True, BLACK)
+    screen.blit(bigtext, [475, 320])
   else:
     all_sprites_group.draw (screen)
     font = pygame.font.SysFont('Calibri', 25, True, False)
