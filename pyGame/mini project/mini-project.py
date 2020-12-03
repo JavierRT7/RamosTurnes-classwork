@@ -347,6 +347,7 @@ bullet_group = pygame.sprite.Group()
 boss_group = pygame.sprite.Group()
 boss_bullet_group = pygame.sprite.Group()
 enemy_number = 20
+time = 0
 player = Player(20, 20, 100, 0, 0, 0, 1000)
 player_group.add(player)
 all_sprites_group.add(player)
@@ -377,7 +378,7 @@ for counter in range(enemy_number):
 #Next
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
-def gameLoop(done, enemy_number):
+def gameLoop(done, enemy_number, time):
   ### -- Game Loop
   while not done:
     # -- User input and controls
@@ -451,11 +452,10 @@ def gameLoop(done, enemy_number):
     if player.health < 1:
       all_sprites_group.remove(player)
     #End If
+    score = player.health + player.bullets - enemy_number - time
     enemyNumber = 'Enemies: ' + str(enemy_number)
     Health = 'Health: ' + str(player.health)
-    Money = 'Money: ' + str(player.money)
-    Keys = 'Keys: ' + str(player.keys)
-    Score = 'Score: ' + str(player.score)
+    Score = 'Score: ' + str(score)
     Bullets = 'Bullets: ' + str(player.bullets)
     if enemy_number < 1:
       bossHealth = 'Boss Health: ' + str(boss.health)
@@ -473,6 +473,9 @@ def gameLoop(done, enemy_number):
       bigfont = pygame.font.SysFont('Calibri', 60, True, False)
       bigtext = bigfont.render('Winner!', True, BLACK)
       screen.blit(bigtext, [475, 320])
+      font = pygame.font.SysFont('Calibri', 25, True, False)
+      text = font.render(Score, True, BLACK)
+      screen.blit(text, [500, 400])
     else:
       all_sprites_group.draw (screen)
       font = pygame.font.SysFont('Calibri', 25, True, False)
@@ -499,7 +502,8 @@ def gameLoop(done, enemy_number):
     pygame.display.flip()
     # - The clock ticks over
     clock.tick(60)
+    time = time + 0.01
   #End While - End of game loop
 #End Procedure
-gameLoop(done, enemy_number)
+gameLoop(done, enemy_number, time)
 pygame.quit()
