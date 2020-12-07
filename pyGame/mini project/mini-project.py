@@ -18,7 +18,7 @@ pygame.mixer.init()
 size = (1200,720)
 screen = pygame.display.set_mode(size)
 # -- Title of new window/screen
-pygame.display.set_caption("My Window")
+pygame.display.set_caption("Fake Pacman")
 #Classes
 class Player(pygame.sprite.Sprite):
   # Define the constructor for snow
