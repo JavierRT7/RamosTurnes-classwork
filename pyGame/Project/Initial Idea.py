@@ -41,13 +41,70 @@ class Door(pygame.sprite.Sprite):
         self.rect.y = y_ref
     #End Procedure
 #End Class
-class Selector(pygame.sprite.Sprite):
+class Selector_Left(pygame.sprite.Sprite):
     # Define the constructor for invader
     def __init__(self, x_ref, y_ref):
         # Call the sprite constructor
         super().__init__()
         # Create a sprite and fill it with colour
-        self.image = pygame.image.load('Selector.png')
+        self.image = pygame.Surface([5,40])
+        self.image.fill(BLACK)
+        self.rect = self.image.get_rect()
+        # Set the position of the player attributes
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+    #End Procedure
+#End Class
+class Selector_Right(pygame.sprite.Sprite):
+    # Define the constructor for invader
+    def __init__(self, x_ref, y_ref):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.Surface([5,40])
+        self.image.fill(BLACK)
+        self.rect = self.image.get_rect()
+        # Set the position of the player attributes
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+    #End Procedure
+#End Class
+class Selector_Top(pygame.sprite.Sprite):
+    # Define the constructor for invader
+    def __init__(self, x_ref, y_ref):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.Surface([40,5])
+        self.image.fill(BLACK)
+        self.rect = self.image.get_rect()
+        # Set the position of the player attributes
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+    #End Procedure
+#End Class
+class Selector_Bottom(pygame.sprite.Sprite):
+    # Define the constructor for invader
+    def __init__(self, x_ref, y_ref):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.Surface([40,5])
+        self.image.fill(BLACK)
+        self.rect = self.image.get_rect()
+        # Set the position of the player attributes
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+    #End Procedure
+#End Class
+class Window(pygame.sprite.Sprite):
+    # Define the constructor for invader
+    def __init__(self, x_ref, y_ref):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.Surface([40,5])
+        self.image.fill(BLACK)
         self.rect = self.image.get_rect()
         # Set the position of the player attributes
         self.rect.x = x_ref
@@ -56,9 +113,6 @@ class Selector(pygame.sprite.Sprite):
 #End Class
 # -- Exit game flag set to false
 done = False
-group = pygame.sprite.Group()
-selector = Selector(300, 300)
-group.add(selector)
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 ### -- Game Loop
@@ -71,9 +125,8 @@ while not done:
   #Next event
   # -- Game logic goes after this comment
   # -- Screen background is BLACK
-  screen.fill (YELLOW)
+  screen.fill (WHITE)
   # -- Draw here
-  group.draw(screen)
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
