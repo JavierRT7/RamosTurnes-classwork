@@ -14,6 +14,33 @@ screen = pygame.display.set_mode(size)
 # -- Title of new window/screen
 pygame.display.set_caption("My Window")
 #Classes
+class Player(pygame.sprite.Sprite):
+    # Define the constructor for invader
+    def __init__(self, x_ref, y_ref):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.image.load('player.png')
+        self.rect = self.image.get_rect()
+        # Set the position of the player attributes
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+    #End Procedure
+#End Class
+class Map_Block(pygame.sprite.Sprite):
+    # Define the constructor for invader
+    def __init__(self, color, width, height, x_ref, y_ref):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.Surface([width,height])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        # Set the position of the player attributes
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+    #End Procedure
+#End Class
 class Brick(pygame.sprite.Sprite):
     # Define the constructor for invader
     def __init__(self, x_ref, y_ref):
@@ -70,7 +97,7 @@ class Selector_Right(pygame.sprite.Sprite):
 #End Class
 class Selector_Top(pygame.sprite.Sprite):
     # Define the constructor for invader
-    def __init__(self, x_ref, y_ref):
+    def __init__(self, x_ref, y_ref, pos_x, pos_y):
         # Call the sprite constructor
         super().__init__()
         # Create a sprite and fill it with colour
@@ -80,6 +107,8 @@ class Selector_Top(pygame.sprite.Sprite):
         # Set the position of the player attributes
         self.rect.x = x_ref
         self.rect.y = y_ref
+        self.pos_x = pos_x
+        self.pos_y = pos_y
     #End Procedure
 #End Class
 class Selector_Bottom(pygame.sprite.Sprite):
@@ -109,14 +138,47 @@ class Window(pygame.sprite.Sprite):
         self.rect.y = y_ref
     #End Procedure
 #End Class
+class Apple(pygame.sprite.Sprite):
+    # Define the constructor for invader
+    def __init__(self, x_ref, y_ref):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.image.load('apple.png')
+        self.rect = self.image.get_rect()
+        # Set the position of the player attributes
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+    #End Procedure
+#End Class
 # -- Exit game flag set to false
 intro = True
 map_draw = False
+in_game = False
 endgame = False
+is_player_there = False
+map = [[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0],]
 all_sprites_group = pygame.sprite.Group()
 selector_sprites_group = pygame.sprite.Group()
+map_sprites_group = pygame.sprite.Group()
+draw_sprites_group = pygame.sprite.Group()
 #top selector
-selector_top = Selector_Top(0, 0)
+selector_top = Selector_Top(0, 0, 0, 0)
 all_sprites_group.add(selector_top)
 selector_sprites_group.add(selector_top)
 #left selector
@@ -175,30 +237,61 @@ while map_draw == True:
         selector_right.rect.x = selector_right.rect.x + 40
         selector_top.rect.x = selector_top.rect.x + 40
         selector_bottom.rect.x = selector_bottom.rect.x + 40
+        selector_top.pos_x = selector_top.pos_x + 1
       if event.key == pygame.K_LEFT: # - if the left key pressed
         selector_left.rect.x = selector_left.rect.x - 40
         selector_right.rect.x = selector_right.rect.x - 40
         selector_top.rect.x = selector_top.rect.x - 40
         selector_bottom.rect.x = selector_bottom.rect.x - 40
+        selector_top.pos_x = selector_top.pos_x - 1
       if event.key == pygame.K_DOWN: # - if the left key pressed
         selector_left.rect.y = selector_left.rect.y + 40
         selector_right.rect.y = selector_right.rect.y + 40
         selector_top.rect.y = selector_top.rect.y + 40
         selector_bottom.rect.y = selector_bottom.rect.y + 40
+        selector_top.pos_y = selector_top.pos_y + 1
       if event.key == pygame.K_UP: # - if the left key pressed
         selector_left.rect.y = selector_left.rect.y - 40
         selector_right.rect.y = selector_right.rect.y - 40
         selector_top.rect.y = selector_top.rect.y - 40
         selector_bottom.rect.y = selector_bottom.rect.y - 40
+        selector_top.pos_y = selector_top.pos_y - 1
       if event.key == pygame.K_1:
         brick = Brick(selector_left.rect.x, selector_top.rect.y)
+        draw_sprites_group.add(brick)
         all_sprites_group.add(brick)
+        map[selector_top.pos_x][selector_top.pos_y] = 1
       if event.key == pygame.K_2:
         window = Window(selector_left.rect.x, selector_top.rect.y)
+        draw_sprites_group.add(window)
         all_sprites_group.add(window)
+        map[selector_top.pos_x][selector_top.pos_y] = 2
       if event.key == pygame.K_3:
         door = Door(selector_left.rect.x, selector_top.rect.y)
+        draw_sprites_group.add(door)
         all_sprites_group.add(door)
+        map[selector_top.pos_x][selector_top.pos_y] = 3
+      if event.key == pygame.K_4:
+        apple = Apple(selector_left.rect.x, selector_top.rect.y)
+        draw_sprites_group.add(apple)
+        all_sprites_group.add(apple)
+        map[selector_top.pos_x][selector_top.pos_y] = 4
+      if event.key == pygame.K_5:
+        for y in range(12):
+            for x in range(16):
+                if map[x][y] == 5:
+                    is_player_there = True
+                #End If
+            #Next
+        #Next
+        if is_player_there == False:
+            player = Player(selector_left.rect.x, selector_top.rect.y)
+            draw_sprites_group.add(player)
+            all_sprites_group.add(player)
+            map[selector_top.pos_x][selector_top.pos_y] = 5
+      if event.key == pygame.K_RETURN:
+        map_draw = False
+        in_game = True
     #End If
   #Next event
   # -- Game logic goes after this comment
@@ -240,13 +333,81 @@ while map_draw == True:
   screen.blit(text, [650, 40])
   text = font.render('Press 3 to place a door', True, WHITE)
   screen.blit(text, [650, 70])
-  all_sprites_group.draw(screen)
+  text = font.render('Press 4 to place an apple', True, WHITE)
+  screen.blit(text, [650, 100])
+  text = font.render('Press enter to start the game', True, WHITE)
+  screen.blit(text, [650, 130])
+  draw_sprites_group.draw(screen)
   selector_sprites_group.draw(screen)
   # -- Draw here
   # -- flip display to reveal new position of objects
   pygame.display.flip()
   # - The clock ticks over
   clock.tick(60)
+#End While - End of game loop
+while in_game == True:
+    # -- User input and controls
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            in_game = False
+            endgame = True
+        #End If
+    #Next event
+    # -- Game logic goes after this comment
+    for y in range(12):
+        for x in range(16):
+            if map[x][y] == 0:
+                map_block = Map_Block(WHITE, 40, 40, x*40, y *40)
+                map_sprites_group.add(map_block)
+                all_sprites_group.add(map_block)
+            #End If
+        #Next
+    #Next
+    for y in range(12):
+        for x in range(16):
+            if map[x][y] == 1:
+                brick = Brick(x*40, y*40)
+                map_sprites_group.add(brick)
+                all_sprites_group.add(brick)
+            #End If
+        #Next
+    #Next
+    for y in range(12):
+        for x in range(16):
+            if map[x][y] == 2:
+                window = Window(x*40, y *40)
+                map_sprites_group.add(window)
+                all_sprites_group.add(window)
+            #End If
+        #Next
+    #Next
+    for y in range(12):
+        for x in range(16):
+            if map[x][y] == 3:
+                door = Door(x*40, y *40)
+                map_sprites_group.add(door)
+                all_sprites_group.add(door)
+            #End If
+        #Next
+    #Next
+    for y in range(12):
+        for x in range(16):
+            if map[x][y] == 4:
+                apple = Apple(x*40, y *40)
+                map_sprites_group.add(apple)
+                all_sprites_group.add(apple)
+            #End If
+        #Next
+    #Next
+    # -- Screen background is BLACK
+    screen.fill(WHITE)
+    pygame.draw.rect(screen, BLACK, (640, 0, 360, 480))
+    map_sprites_group.draw(screen)
+    # -- Draw here
+    # -- flip display to reveal new position of objects
+    pygame.display.flip()
+    # - The clock ticks over
+    clock.tick(60)
 #End While - End of game loop
 if endgame == True:
     pygame.quit()
