@@ -177,6 +177,7 @@ all_sprites_group = pygame.sprite.Group()
 selector_sprites_group = pygame.sprite.Group()
 map_sprites_group = pygame.sprite.Group()
 draw_sprites_group = pygame.sprite.Group()
+player_sprites_group = pygame.sprite.Group()
 #top selector
 selector_top = Selector_Top(0, 0, 0, 0)
 all_sprites_group.add(selector_top)
@@ -399,10 +400,20 @@ while in_game == True:
             #End If
         #Next
     #Next
+    for y in range(12):
+        for x in range(16):
+            if map[x][y] == 5:
+                player = Player(x*40, y *40)
+                player_sprites_group.add(player)
+                all_sprites_group.add(player)
+            #End If
+        #Next
+    #Next
     # -- Screen background is BLACK
     screen.fill(WHITE)
     pygame.draw.rect(screen, BLACK, (640, 0, 360, 480))
     map_sprites_group.draw(screen)
+    player_sprites_group.draw(screen)
     # -- Draw here
     # -- flip display to reveal new position of objects
     pygame.display.flip()
