@@ -27,6 +27,19 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = y_ref
     #End Procedure
 #End Class
+class Monster(pygame.sprite.Sprite):
+    # Define the constructor for invader
+    def __init__(self, x_ref, y_ref):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.image.load('monster.jpg')
+        self.rect = self.image.get_rect()
+        # Set the position of the player attributes
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+    #End Procedure
+#End Class
 class Map_Block(pygame.sprite.Sprite):
     # Define the constructor for invader
     def __init__(self, color, width, height, x_ref, y_ref):
@@ -290,6 +303,11 @@ while map_draw == True:
             draw_sprites_group.add(player)
             all_sprites_group.add(player)
             map[selector_top.pos_x][selector_top.pos_y] = 5
+      if event.key == pygame.K_6:
+        monster = Monster(selector_left.rect.x, selector_top.rect.y)
+        draw_sprites_group.add(monster)
+        all_sprites_group.add(monster)
+        map[selector_top.pos_x][selector_top.pos_y] = 6
       if event.key == pygame.K_RETURN:
         map_draw = False
         in_game = True
@@ -336,8 +354,12 @@ while map_draw == True:
   screen.blit(text, [650, 70])
   text = font.render('Press 4 to place an apple', True, WHITE)
   screen.blit(text, [650, 100])
-  text = font.render('Press enter to start the game', True, WHITE)
+  text = font.render('Press 5 to place your player', True, WHITE)
   screen.blit(text, [650, 130])
+  text = font.render('Press 6 to place a monster', True, WHITE)
+  screen.blit(text, [650, 160])
+  text = font.render('Press enter to start the game', True, WHITE)
+  screen.blit(text, [650, 190])
   draw_sprites_group.draw(screen)
   selector_sprites_group.draw(screen)
   # -- Draw here
@@ -406,6 +428,15 @@ while in_game == True:
                 player = Player(x*40, y *40)
                 player_sprites_group.add(player)
                 all_sprites_group.add(player)
+            #End If
+        #Next
+    #Next
+    for y in range(12):
+        for x in range(16):
+            if map[x][y] == 6:
+                monster = Monster(x*40, y *40)
+                map_sprites_group.add(monster)
+                all_sprites_group.add(monster)
             #End If
         #Next
     #Next
