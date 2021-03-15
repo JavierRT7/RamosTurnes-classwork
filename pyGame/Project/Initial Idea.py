@@ -16,7 +16,7 @@ pygame.display.set_caption("My Window")
 #Classes
 class Player(pygame.sprite.Sprite):
     # Define the constructor for invader
-    def __init__(self, x_ref, y_ref):
+    def __init__(self, x_ref, y_ref, speed_x, speed_y):
         # Call the sprite constructor
         super().__init__()
         # Create a sprite and fill it with colour
@@ -25,6 +25,8 @@ class Player(pygame.sprite.Sprite):
         # Set the position of the player attributes
         self.rect.x = x_ref
         self.rect.y = y_ref
+        self.speed_x = speed_x
+        self.speed_y = speed_y
     #End Procedure
 #End Class
 class Monster(pygame.sprite.Sprite):
@@ -299,7 +301,7 @@ while map_draw == True:
             #Next
         #Next
         if is_player_there == False:
-            player = Player(selector_left.rect.x, selector_top.rect.y)
+            player = Player(selector_left.rect.x, selector_top.rect.y, 0, 0)
             draw_sprites_group.add(player)
             all_sprites_group.add(player)
             map[selector_top.pos_x][selector_top.pos_y] = 5
@@ -368,6 +370,69 @@ while map_draw == True:
   # - The clock ticks over
   clock.tick(60)
 #End While - End of game loop
+for y in range(12):
+    for x in range(16):
+        if map[x][y] == 0:
+            map_block = Map_Block(WHITE, 40, 40, x*40, y *40)
+            map_sprites_group.add(map_block)
+            all_sprites_group.add(map_block)
+        #End If
+    #Next
+#Next
+for y in range(12):
+    for x in range(16):
+        if map[x][y] == 1:
+            brick = Brick(x*40, y*40)
+            map_sprites_group.add(brick)
+            all_sprites_group.add(brick)
+        #End If
+    #Next
+#Next
+for y in range(12):
+    for x in range(16):
+        if map[x][y] == 2:
+            window = Window(x*40, y *40)
+            map_sprites_group.add(window)
+            all_sprites_group.add(window)
+        #End If
+    #Next
+#Next
+for y in range(12):
+    for x in range(16):
+        if map[x][y] == 3:
+            door = Door(x*40, y *40)
+            map_sprites_group.add(door)
+            all_sprites_group.add(door)
+        #End If
+    #Next
+#Next
+for y in range(12):
+    for x in range(16):
+        if map[x][y] == 4:
+            apple = Apple(x*40, y *40)
+            map_sprites_group.add(apple)
+            all_sprites_group.add(apple)
+        #End If
+    #Next
+#Next
+for y in range(12):
+    for x in range(16):
+        if map[x][y] == 5:
+            player = Player(x*40, y *40, 0, 0)
+            player_sprites_group.add(player)
+            all_sprites_group.add(player)
+        #End If
+    #Next
+#Next
+for y in range(12):
+    for x in range(16):
+        if map[x][y] == 6:
+            monster = Monster(x*40, y *40)
+            map_sprites_group.add(monster)
+            all_sprites_group.add(monster)
+        #End If
+    #Next
+#Next
 while in_game == True:
     # -- User input and controls
     for event in pygame.event.get():
@@ -377,69 +442,24 @@ while in_game == True:
         #End If
     #Next event
     # -- Game logic goes after this comment
-    for y in range(12):
-        for x in range(16):
-            if map[x][y] == 0:
-                map_block = Map_Block(WHITE, 40, 40, x*40, y *40)
-                map_sprites_group.add(map_block)
-                all_sprites_group.add(map_block)
-            #End If
-        #Next
-    #Next
-    for y in range(12):
-        for x in range(16):
-            if map[x][y] == 1:
-                brick = Brick(x*40, y*40)
-                map_sprites_group.add(brick)
-                all_sprites_group.add(brick)
-            #End If
-        #Next
-    #Next
-    for y in range(12):
-        for x in range(16):
-            if map[x][y] == 2:
-                window = Window(x*40, y *40)
-                map_sprites_group.add(window)
-                all_sprites_group.add(window)
-            #End If
-        #Next
-    #Next
-    for y in range(12):
-        for x in range(16):
-            if map[x][y] == 3:
-                door = Door(x*40, y *40)
-                map_sprites_group.add(door)
-                all_sprites_group.add(door)
-            #End If
-        #Next
-    #Next
-    for y in range(12):
-        for x in range(16):
-            if map[x][y] == 4:
-                apple = Apple(x*40, y *40)
-                map_sprites_group.add(apple)
-                all_sprites_group.add(apple)
-            #End If
-        #Next
-    #Next
-    for y in range(12):
-        for x in range(16):
-            if map[x][y] == 5:
-                player = Player(x*40, y *40)
-                player_sprites_group.add(player)
-                all_sprites_group.add(player)
-            #End If
-        #Next
-    #Next
-    for y in range(12):
-        for x in range(16):
-            if map[x][y] == 6:
-                monster = Monster(x*40, y *40)
-                map_sprites_group.add(monster)
-                all_sprites_group.add(monster)
-            #End If
-        #Next
-    #Next
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_UP]:
+        player.speed_y = -2
+        player.rect.y = player.rect.y + player.speed_y
+    #End If
+    if keys[pygame.K_DOWN]:
+        player.speed_y = 2
+        player.rect.y = player.rect.y + player.speed_y
+    #End If
+    if keys[pygame.K_RIGHT]:
+        player.speed_x = 2
+        player.rect.x = player.rect.x + player.speed_x
+    #End If
+    if keys[pygame.K_LEFT]:
+        player.speed_x = -2
+        player.rect.x = player.rect.x + player.speed_x
+    #End If
+    all_sprites_group.update()
     # -- Screen background is BLACK
     screen.fill(WHITE)
     pygame.draw.rect(screen, BLACK, (640, 0, 360, 480))
