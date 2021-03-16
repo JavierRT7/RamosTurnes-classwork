@@ -254,24 +254,48 @@ while map_draw == True:
         selector_top.rect.x = selector_top.rect.x + 40
         selector_bottom.rect.x = selector_bottom.rect.x + 40
         selector_top.pos_x = selector_top.pos_x + 1
+        if selector_left.rect.x > 600:
+            selector_left.rect.x = selector_left.rect.x - 40
+            selector_right.rect.x = selector_right.rect.x - 40
+            selector_top.rect.x = selector_top.rect.x - 40
+            selector_bottom.rect.x = selector_bottom.rect.x - 40
+            selector_top.pos_x = selector_top.pos_x - 1
       if event.key == pygame.K_LEFT: # - if the left key pressed
         selector_left.rect.x = selector_left.rect.x - 40
         selector_right.rect.x = selector_right.rect.x - 40
         selector_top.rect.x = selector_top.rect.x - 40
         selector_bottom.rect.x = selector_bottom.rect.x - 40
         selector_top.pos_x = selector_top.pos_x - 1
+        if selector_left.rect.x < 0:
+            selector_left.rect.x = selector_left.rect.x + 40
+            selector_right.rect.x = selector_right.rect.x + 40
+            selector_top.rect.x = selector_top.rect.x + 40
+            selector_bottom.rect.x = selector_bottom.rect.x + 40
+            selector_top.pos_x = selector_top.pos_x + 1
       if event.key == pygame.K_DOWN: # - if the left key pressed
         selector_left.rect.y = selector_left.rect.y + 40
         selector_right.rect.y = selector_right.rect.y + 40
         selector_top.rect.y = selector_top.rect.y + 40
         selector_bottom.rect.y = selector_bottom.rect.y + 40
         selector_top.pos_y = selector_top.pos_y + 1
+        if selector_left.rect.y > 440:
+            selector_left.rect.y = selector_left.rect.y - 40
+            selector_right.rect.y = selector_right.rect.y - 40
+            selector_top.rect.y = selector_top.rect.y - 40
+            selector_bottom.rect.y = selector_bottom.rect.y - 40
+            selector_top.pos_y = selector_top.pos_y - 1
       if event.key == pygame.K_UP: # - if the left key pressed
         selector_left.rect.y = selector_left.rect.y - 40
         selector_right.rect.y = selector_right.rect.y - 40
         selector_top.rect.y = selector_top.rect.y - 40
         selector_bottom.rect.y = selector_bottom.rect.y - 40
         selector_top.pos_y = selector_top.pos_y - 1
+        if selector_left.rect.y < 0:
+            selector_left.rect.y = selector_left.rect.y + 40
+            selector_right.rect.y = selector_right.rect.y + 40
+            selector_top.rect.y = selector_top.rect.y + 40
+            selector_bottom.rect.y = selector_bottom.rect.y + 40
+            selector_top.pos_y = selector_top.pos_y + 1
       if event.key == pygame.K_1:
         brick = Brick(selector_left.rect.x, selector_top.rect.y)
         draw_sprites_group.add(brick)
@@ -446,18 +470,26 @@ while in_game == True:
     if keys[pygame.K_UP]:
         player.speed_y = -2
         player.rect.y = player.rect.y + player.speed_y
+        if player.rect.y < 0:
+            player.rect.y = player.rect.y - player.speed_y
     #End If
     if keys[pygame.K_DOWN]:
         player.speed_y = 2
         player.rect.y = player.rect.y + player.speed_y
+        if player.rect.y > 440:
+            player.rect.y = player.rect.y - player.speed_y
     #End If
     if keys[pygame.K_RIGHT]:
         player.speed_x = 2
         player.rect.x = player.rect.x + player.speed_x
+        if player.rect.x > 600:
+            player.rect.x = player.rect.x - player.speed_x
     #End If
     if keys[pygame.K_LEFT]:
         player.speed_x = -2
         player.rect.x = player.rect.x + player.speed_x
+        if player.rect.x < 0:
+            player.rect.x = player.rect.x - player.speed_x
     #End If
     all_sprites_group.update()
     # -- Screen background is BLACK
