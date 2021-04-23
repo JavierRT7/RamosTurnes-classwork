@@ -1,13 +1,7 @@
 import random
 import time
 
-numbers = []
-for counter in range(200):
-    numbers.append(random.randint(1, 1000))
-#Next
-
 def bubbleSort(numbers):
-    print(numbers)
     temp = 0
     for count in range(len(numbers) * len(numbers)):
         for counter in range(len(numbers) - 1):
@@ -16,36 +10,42 @@ def bubbleSort(numbers):
                 numbers[counter] = numbers[counter + 1]
                 numbers[counter + 1] = temp
 
-    print(numbers)
 def insertionSort(numbers):
-    print(numbers)
-    for count in range(len(numbers) - 1):
+    for count in range(len(numbers)):
         nextNum = numbers[count]
         counter = count - 1
         while counter >= 0 and numbers[counter] > nextNum:
             numbers[counter + 1] = numbers[counter]
             counter = counter - 1
         numbers[counter + 1] = nextNum
-    print(numbers)
+
+numbers = []
+for counter in range(1000):
+    numbers.append(random.randint(1, 1000))
+#Next
+print(numbers)
 startbubble = time.time()
 bubbleSort(numbers)
 endbubble = time.time()
+print(numbers)
 numbers = []
-for counter in range(200):
+for counter in range(1000):
     numbers.append(random.randint(1, 1000))
 #Next
+print(numbers)
 startpython = time.time()
-print(numbers)
 numbers.sort()
-print(numbers)
 endpython = time.time()
+print(numbers)
 numbers = []
-for counter in range(200):
+for counter in range(1000):
     numbers.append(random.randint(1, 1000))
 #Next
+print(numbers)
 startinsert = time.time()
 insertionSort(numbers)
 endinsert = time.time()
+print(numbers)
 print("The bubble sort took", endbubble - startbubble, "seconds")
 print("The in-built sort function took", endpython - startpython, "seconds")
 print("The insertion sort took", endinsert - startinsert, "seconds")
