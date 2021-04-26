@@ -23,29 +23,29 @@ numbers = []
 for counter in range(1000):
     numbers.append(random.randint(1, 1000))
 #Next
-#print(numbers)
+print(numbers)
 startbubble = time.time()
 bubbleSort(numbers)
 endbubble = time.time()
-#print(numbers)
+print(numbers)
 numbers = []
 for counter in range(1000):
     numbers.append(random.randint(1, 1000))
 #Next
-#print(numbers)
+print(numbers)
 startpython = time.time()
 numbers.sort()
 endpython = time.time()
-#print(numbers)
+print(numbers)
 numbers = []
 for counter in range(1000):
     numbers.append(random.randint(1, 1000))
 #Next
-#print(numbers)
+print(numbers)
 startinsert = time.time()
 insertionSort(numbers)
 endinsert = time.time()
-#print(numbers)
+print(numbers)
 print("The bubble sort took", endbubble - startbubble, "seconds")
 print("The in-built sort function took", endpython - startpython, "seconds")
 print("The insertion sort took", endinsert - startinsert, "seconds")
