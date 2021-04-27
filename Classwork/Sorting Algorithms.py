@@ -20,32 +20,29 @@ def insertionSort(numbers):
         numbers[counter + 1] = nextNum
 
 numbers = []
-for counter in range(1000):
+for counter in range(10):
     numbers.append(random.randint(1, 1000))
 #Next
-print(numbers)
 startbubble = time.time()
 bubbleSort(numbers)
 endbubble = time.time()
-print(numbers)
+print("done")
 numbers = []
-for counter in range(1000):
+for counter in range(1000000):
     numbers.append(random.randint(1, 1000))
 #Next
-print(numbers)
 startpython = time.time()
 numbers.sort()
 endpython = time.time()
-print(numbers)
+print("done")
 numbers = []
-for counter in range(1000):
+for counter in range(10000):
     numbers.append(random.randint(1, 1000))
 #Next
-print(numbers)
 startinsert = time.time()
 insertionSort(numbers)
 endinsert = time.time()
-print(numbers)
+print("done")
 print("The bubble sort took", endbubble - startbubble, "seconds")
 print("The in-built sort function took", endpython - startpython, "seconds")
 print("The insertion sort took", endinsert - startinsert, "seconds")
