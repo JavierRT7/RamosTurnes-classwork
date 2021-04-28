@@ -3,8 +3,8 @@ import time
 
 def bubbleSort(numbers):
     temp = 0
-    for count in range(len(numbers) * len(numbers)):
-        for counter in range(len(numbers) - 1):
+    for count in range(len(numbers) - 2):
+        for counter in range(len(numbers) - count - 2):
             if numbers[counter] > numbers[counter + 1]:
                 temp = numbers[counter]
                 numbers[counter] = numbers[counter + 1]
@@ -31,17 +31,16 @@ def inbuiltSort(numbers):
 #End Procedure
 
 numbers = []
-for counter in range(1000):
+for counter in range(10000):
     numbers.append(random.randint(1, 1000))
 #Next
-
 startbubble = time.time()
 bubbleSort(numbers)
 endbubble = time.time()
 print("done")
 
 numbers = []
-for counter in range(1000):
+for counter in range(10000):
     numbers.append(random.randint(1, 1000))
 #Next
 
@@ -51,7 +50,7 @@ endpython = time.time()
 print("done")
 
 numbers = []
-for counter in range(1000):
+for counter in range(10000):
     numbers.append(random.randint(1, 1000))
 #Next
 
