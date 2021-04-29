@@ -31,33 +31,33 @@ def inbuiltSort(numbers):
 #End Procedure
 
 numbers = []
-for counter in range(10000):
+for counter in range(30000):
     numbers.append(random.randint(1, 1000))
 #Next
 startbubble = time.time()
 bubbleSort(numbers)
 endbubble = time.time()
-print("done")
+print("bubble sort done")
 
 numbers = []
-for counter in range(10000):
+for counter in range(30000):
     numbers.append(random.randint(1, 1000))
 #Next
 
 startpython = time.time()
 inbuiltSort(numbers)
 endpython = time.time()
-print("done")
+print("in-built sort done")
 
 numbers = []
-for counter in range(10000):
+for counter in range(30000):
     numbers.append(random.randint(1, 1000))
 #Next
 
 startinsert = time.time()
 insertionSort(numbers)
 endinsert = time.time()
-print("done")
+print("insertion sort done")
 
 print("The bubble sort took", endbubble - startbubble, "seconds")
 print("The in-built sort function took", endpython - startpython, "seconds")
