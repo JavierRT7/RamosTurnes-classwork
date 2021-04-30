@@ -35,40 +35,52 @@ def mergeSort(numbers):
         mid = len(numbers) // 2
         left = numbers[:mid]
         right = numbers[mid:]
-
-        # Recursive call on each half
         mergeSort(left)
         mergeSort(right)
-
-        # Two iterators for traversing the two halves
         i = 0
         j = 0
-        
-        # Iterator for the main list
-        k = 0
-        
+        k = 0 
         while i < len(left) and j < len(right):
             if left[i] < right[j]:
-              # The value from the left half has been used
               numbers[k] = left[i]
-              # Move the iterator forward
-              i += 1
+              i = i + 1
             else:
                 numbers[k] = right[j]
-                j += 1
-            # Move to the next slot
-            k += 1
-
-        # For all the remaining values
+                j = j + 1
+            #End If
+            k = k + 1
+        #End While
         while i < len(left):
             numbers[k] = left[i]
-            i += 1
-            k += 1
-
+            i = i + 1
+            k = k + 1
+        #End While
         while j < len(right):
             numbers[k]=right[j]
-            j += 1
-            k += 1
+            j = j + 1
+            k = k + 1
+        #End While
+#End Procedure
+
+def quickSort(numbers):
+    pivot = numbers[0]
+    left_pointer = 1
+    right_pointer = len(numbers) - 1
+    temp = 0
+    while left_pointer < right_pointer:
+        while numbers[left_pointer] < pivot and numbers[right_pointer] > pivot:
+            left_pointer = left_pointer + 1
+            right_pointer = right_pointer - 1
+        #End While
+        temp = numbers[left_pointer]
+        numbers[left_pointer] = numbers[right_pointer]
+        numbers[right_pointer] = temp
+        left_pointer = left_pointer + 1
+        right_pointer = right_pointer - 1
+    #End While
+
+
+
 numbers = []
 for counter in range(30000):
     numbers.append(random.randint(1, 1000))
