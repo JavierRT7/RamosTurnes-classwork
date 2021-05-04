@@ -63,12 +63,12 @@ def mergeSort(numbers):
 #End Procedure
 
 def quickSort(numbers):
-    pivot = numbers[0]
+    pivot = 0
     left_pointer = 1
     right_pointer = len(numbers) - 1
     temp = 0
     while left_pointer < right_pointer:
-        while numbers[left_pointer] < pivot and numbers[right_pointer] > pivot:
+        while numbers[left_pointer] < numbers[pivot] and numbers[right_pointer] > numbers[pivot]:
             left_pointer = left_pointer + 1
             right_pointer = right_pointer - 1
         #End While
@@ -78,13 +78,21 @@ def quickSort(numbers):
         left_pointer = left_pointer + 1
         right_pointer = right_pointer - 1
     #End While
-
-
+    temp = numbers[pivot]
+    numbers[pivot] = numbers[right_pointer]
+    numbers[right_pointer] = temp
+    left = numbers[:pivot]
+    right =  numbers[pivot:]
+    quickSort(left)
+    quickSort(right)
+    print(numbers)
+#End Procedure
 
 numbers = []
 for counter in range(30000):
     numbers.append(random.randint(1, 1000))
 #Next
+
 startbubble = time.time()
 bubbleSort(numbers)
 endbubble = time.time()
@@ -120,7 +128,18 @@ mergeSort(numbers)
 endmerge = time.time()
 print("merge sort done")
 
+numbers = []
+for counter in range(30000):
+    numbers.append(random.randint(1, 1000))
+#Next
+
+startquick = time.time()
+quickSort(numbers)
+endquick = time.time()
+print("quick sort done")
+
 print("The bubble sort took", endbubble - startbubble, "seconds")
 print("The in-built sort function took", endpython - startpython, "seconds")
 print("The insertion sort took", endinsert - startinsert, "seconds")
 print("The merge sort took", endmerge - startmerge, "seconds")
+print("The quick sort took", endquick - startquick, "seconds")
