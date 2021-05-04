@@ -89,7 +89,7 @@ def quickSort(numbers):
 #End Procedure
 
 numbers = []
-for counter in range(30000):
+for counter in range(1000):
     numbers.append(random.randint(1, 1000))
 #Next
 
@@ -99,7 +99,7 @@ endbubble = time.time()
 print("bubble sort done")
 
 numbers = []
-for counter in range(30000):
+for counter in range(1000):
     numbers.append(random.randint(1, 1000))
 #Next
 
@@ -109,7 +109,7 @@ endpython = time.time()
 print("in-built sort done")
 
 numbers = []
-for counter in range(30000):
+for counter in range(1000):
     numbers.append(random.randint(1, 1000))
 #Next
 
@@ -119,7 +119,7 @@ endinsert = time.time()
 print("insertion sort done")
 
 numbers = []
-for counter in range(30000):
+for counter in range(1000):
     numbers.append(random.randint(1, 1000))
 #Next
 
@@ -129,7 +129,7 @@ endmerge = time.time()
 print("merge sort done")
 
 numbers = []
-for counter in range(30000):
+for counter in range(1000):
     numbers.append(random.randint(1, 1000))
 #Next
 
