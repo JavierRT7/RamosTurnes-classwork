@@ -133,13 +133,13 @@ for counter in range(1000):
     numbers.append(random.randint(1, 1000))
 #Next
 
-startquick = time.time()
-quickSort(numbers)
-endquick = time.time()
-print("quick sort done")
+#startquick = time.time()
+#quickSort(numbers)
+#endquick = time.time()
+#print("quick sort done")
 
 print("The bubble sort took", endbubble - startbubble, "seconds")
 print("The in-built sort function took", endpython - startpython, "seconds")
 print("The insertion sort took", endinsert - startinsert, "seconds")
 print("The merge sort took", endmerge - startmerge, "seconds")
-print("The quick sort took", endquick - startquick, "seconds")
+#print("The quick sort took", endquick - startquick, "seconds")
