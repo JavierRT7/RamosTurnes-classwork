@@ -7,16 +7,16 @@ else:
         answer = input("Is it steamed?")
         if answer == "yes":
             answer = input("Does it contain suet?")
-        else:
-            print("It is not a pudding")
             if answer == "yes":
                 answer = input("Does it contain flour?")
-            else:
-                print("It's not a pudding")
                 if answer == "yes":
                     print("It is a pudding!")
                 else:
                     print("It is not a pudding")
+            else:
+                print("It's not a pudding")
+        else:
+            print("It is not a pudding")
     else:
         answer = input("Does it contain milk?")
         if answer == "yes":
@@ -30,6 +30,14 @@ else:
                         answer = input("Is it milk-thickened?")
                         if answer == "yes":
                             print("It is a blancmange!!! not a pudding idiot!")
+                        else:
+                            print("It's still just a pudding")
+                    else:
+                        print("It's not a pudding")
+                else:
+                    print("It's not a pudding")
+            else:
+                print("It is not a pudding")
         else:
             answer = input("Is it gelatine based?")
             if answer == "yes":
