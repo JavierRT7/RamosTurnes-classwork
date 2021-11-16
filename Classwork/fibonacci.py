@@ -1,11 +1,8 @@
-fibonacci = []
-old_value = 1
-value = 1
-print(old_value)
-print(value)
-for counter in range(10000):
-    temp = value + old_value
-    print(temp)
-    fibonacci.append(temp)
-    old_value = value
-    value = temp
+x=0
+y=0
+z=1
+for i in range(100):
+    print(z)
+    x=y
+    y=z
+    z=x+y

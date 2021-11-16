@@ -8,5 +8,3 @@ for x in range(100):
     if check==number[5]:
         correct=correct+1
 print(correct)
-
-
