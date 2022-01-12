@@ -61,35 +61,41 @@ def mergeSort(numbers):
             k = k + 1
         #End While
 #End Procedure
+def partition(numbers, low, high):
+    i = (low-1)         # index of smaller element
+    pivot = numbers[high]     # pivot
+ 
+    for j in range(low, high):
+ 
+        # If current element is smaller than or
+        # equal to pivot
+        if numbers[j] <= pivot:
+ 
+            # increment index of smaller element
+            i = i+1
+            numbers[i], numbers[j] = numbers[j], numbers[i]
+ 
+    numbers[i+1], numbers[high] = numbers[high], numbers[i+1]
+    return (i+1)
 
-def quickSort(numbers):
-    pivot = 0
-    left_pointer = 1
-    right_pointer = len(numbers) - 1
-    temp = 0
-    while left_pointer < right_pointer:
-        while numbers[left_pointer] < numbers[pivot] and numbers[right_pointer] > numbers[pivot]:
-            left_pointer = left_pointer + 1
-            right_pointer = right_pointer - 1
-        #End While
-        temp = numbers[left_pointer]
-        numbers[left_pointer] = numbers[right_pointer]
-        numbers[right_pointer] = temp
-        left_pointer = left_pointer + 1
-        right_pointer = right_pointer - 1
-    #End While
-    temp = numbers[pivot]
-    numbers[pivot] = numbers[right_pointer]
-    numbers[right_pointer] = temp
-    left = numbers[:pivot]
-    right =  numbers[pivot:]
-    quickSort(left)
-    quickSort(right)
-    print(numbers)
+def quickSort(numbers, low, high):
+    if len(numbers) == 1:
+        return numbers
+    if low < high:
+ 
+        # pi is partitioning index, arr[p] is now
+        # at right place
+        pi = partition(numbers, low, high)
+ 
+        # Separately sort elements before
+        # partition and after partition
+        quickSort(numbers, low, pi-1)
+        quickSort(numbers, pi+1, high)
 #End Procedure
 
 numbers = []
-for counter in range(10000):
+n = len(numbers)
+for counter in range(10):
     numbers.append(random.randint(1, 1000))
 #Next
 
@@ -99,7 +105,7 @@ endbubble = time.time()
 print("bubble sort done")
 
 numbers = []
-for counter in range(10000):
+for counter in range(10000000000):
     numbers.append(random.randint(1, 1000))
 #Next
 
@@ -109,7 +115,7 @@ endpython = time.time()
 print("in-built sort done")
 
 numbers = []
-for counter in range(10000):
+for counter in range(10):
     numbers.append(random.randint(1, 1000))
 #Next
 
@@ -119,7 +125,7 @@ endinsert = time.time()
 print("insertion sort done")
 
 numbers = []
-for counter in range(10000):
+for counter in range(100000):
     numbers.append(random.randint(1, 1000))
 #Next
 
@@ -129,17 +135,17 @@ endmerge = time.time()
 print("merge sort done")
 
 numbers = []
-for counter in range(10000):
+for counter in range(10000000000):
     numbers.append(random.randint(1, 1000))
 #Next
 
-#startquick = time.time()
-#quickSort(numbers)
-#endquick = time.time()
-#print("quick sort done")
+startquick = time.time()
+quickSort(numbers, 0, n-1)
+endquick = time.time()
+print("quick sort done")
 
 print("The bubble sort took", endbubble - startbubble, "seconds")
 print("The in-built sort function took", endpython - startpython, "seconds")
 print("The insertion sort took", endinsert - startinsert, "seconds")
 print("The merge sort took", endmerge - startmerge, "seconds")
-#print("The quick sort took", endquick - startquick, "seconds")
+print("The quick sort took", endquick - startquick, "seconds")
