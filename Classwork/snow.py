@@ -30,7 +30,7 @@ class Snow(pygame.sprite.Sprite):
             self.speed = random.randint(1,3)
 class House(pygame.sprite.Sprite):
     # Define the constructor for apple
-    def __init__(self, x_ref, y_ref, colour):
+    def __init__(self, x_ref, y_ref, colour, count):
         # Call the sprite constructor
         super().__init__()
         # Create a sprite and load image
@@ -41,11 +41,13 @@ class House(pygame.sprite.Sprite):
         # Set the position of the apple attributes
         self.rect.x = x_ref
         self.rect.y = y_ref
+        self.count = count
     #End Procedure
     def update(self):
-        if self.colour == GREEN:
+        self.count = self.count + 1
+        if self.colour == GREEN and self.count % 30 == 0:
             self.colour = RED
-        else:
+        elif self.count % 30 == 0:
             self.colour = GREEN
         self.image.fill(self.colour)
 # Set the width and height of the screen [width, height]
@@ -60,7 +62,7 @@ done = False
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 all_sprites_group = pygame.sprite.Group()
-house = House(300, 400, GREEN)
+house = House(300, 400, GREEN, 0)
 all_sprites_group.add(house)
 for count in range(1000):
     snowflake = Snow(random.randint(0,700), random.randint(-100,0), random.randint(1,3))
